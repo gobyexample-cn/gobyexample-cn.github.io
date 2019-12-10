@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Go by Example 中文版：HTTP 服务端</title>
+    <link rel="stylesheet" href="/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-89386915-2');
+    </script>
+  </head>
+  <body>
+    <div class="example" id="http-servers">
+      <h2><a href="/" type="text/html">Go by Example 中文版</a>：HTTP 服务端</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>使用 <code>net/http</code> 包，我们可以轻松实现一个简单的 HTTP 服务器。</p>
+
+          </td>
+          <td class="code leading">
+	        <a href="http://play.golang.org/p/6aewtsL_-Xx"><img title="Run code" src="/play.png" class="run" /></a>
+            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;net/http&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><em>handlers</em> 是 <code>net/http</code> 服务器里面的一个基本概念。
+handler 对象实现了 <code>http.Handler</code> 接口。
+编写 handler 的常见方法是，在具有适当签名的函数上使用 <code>http.HandlerFunc</code> 适配。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">hello</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">req</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>handler 函数有两个参数，<code>http.ResponseWriter</code> 和 <code>http.Request</code>。
+response writer 被用于写入 HTTP 响应数据，这里我们简单的返回 &ldquo;hello\n&rdquo;。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;hello\n&quot;</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">headers</span><span class="p">(</span><span class="nx">w</span> <span class="nx">http</span><span class="p">.</span><span class="nx">ResponseWriter</span><span class="p">,</span> <span class="nx">req</span> <span class="o">*</span><span class="nx">http</span><span class="p">.</span><span class="nx">Request</span><span class="p">)</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>这个 handler 稍微复杂一点，
+我们需要读取的 HTTP 请求 header 中的所有内容，并将他们输出至 response body。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">headers</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">req</span><span class="p">.</span><span class="nx">Header</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">h</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">headers</span> <span class="p">{</span>
+            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Fprintf</span><span class="p">(</span><span class="nx">w</span><span class="p">,</span> <span class="s">&quot;%v: %v\n&quot;</span><span class="p">,</span> <span class="nx">name</span><span class="p">,</span> <span class="nx">h</span><span class="p">)</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>使用 <code>http.HandleFunc</code> 函数，可以方便的将我们的 handler 注册到服务器路由。
+它是 <code>net/http</code> 包中的默认路由，接受一个函数作为参数。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">http</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/hello&quot;</span><span class="p">,</span> <span class="nx">hello</span><span class="p">)</span>
+    <span class="nx">http</span><span class="p">.</span><span class="nx">HandleFunc</span><span class="p">(</span><span class="s">&quot;/headers&quot;</span><span class="p">,</span> <span class="nx">headers</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>Finally, we call the <code>ListenAndServe</code> with the port
+and a handler. <code>nil</code> tells it to use the default
+router we&rsquo;ve just set up.</p>
+
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre>    <span class="nx">http</span><span class="p">.</span><span class="nx">ListenAndServe</span><span class="p">(</span><span class="s">&quot;:8090&quot;</span><span class="p">,</span> <span class="kc">nil</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>后台运行服务器。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> go run http-servers.go <span class="p">&amp;</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>访问 <code>/hello</code> 路由。</p>
+
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> curl localhost:8090/hello
+<span class="go">hello</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="/spawning-processes.html" type="text/html">生成进程</a>.
+      </p>
+      
+      <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/http-servers">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Go by Example 中文版：命令行子命令</title>
+    <link rel="stylesheet" href="/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-89386915-2');
+    </script>
+  </head>
+  <body>
+    <div class="example" id="command-line-subcommands">
+      <h2><a href="/" type="text/html">Go by Example 中文版</a>：命令行子命令</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p><code>go</code> 和 <code>git</code> 这种命令行工具，都有很多的 *子命令*。
+并且每个工具都有一套自己的 flag，比如：
+<code>go build</code> 和 <code>go get</code> 是 <code>go</code> 里面的两个不同的子命令。
+<code>flag</code> 包让我们可以轻松的为工具定义简单的子命令。</p>
+
+          </td>
+          <td class="code empty leading">
+	        
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        <a href="http://play.golang.org/p/NHi7TDkJ8-J"><img title="Run code" src="/play.png" class="run" /></a>
+            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;flag&quot;</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们使用 <code>NewFlagSet</code> 函数声明一个子命令，
+然后为这个子命令定义一个专用的 flag。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">fooCmd</span> <span class="o">:=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">NewFlagSet</span><span class="p">(</span><span class="s">&quot;foo&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">ExitOnError</span><span class="p">)</span>
+    <span class="nx">fooEnable</span> <span class="o">:=</span> <span class="nx">fooCmd</span><span class="p">.</span><span class="nx">Bool</span><span class="p">(</span><span class="s">&quot;enable&quot;</span><span class="p">,</span> <span class="kc">false</span><span class="p">,</span> <span class="s">&quot;enable&quot;</span><span class="p">)</span>
+    <span class="nx">fooName</span> <span class="o">:=</span> <span class="nx">fooCmd</span><span class="p">.</span><span class="nx">String</span><span class="p">(</span><span class="s">&quot;name&quot;</span><span class="p">,</span> <span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;name&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>对于不同的子命令，我们可以定义不同的 flag。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">barCmd</span> <span class="o">:=</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">NewFlagSet</span><span class="p">(</span><span class="s">&quot;bar&quot;</span><span class="p">,</span> <span class="nx">flag</span><span class="p">.</span><span class="nx">ExitOnError</span><span class="p">)</span>
+    <span class="nx">barLevel</span> <span class="o">:=</span> <span class="nx">barCmd</span><span class="p">.</span><span class="nx">Int</span><span class="p">(</span><span class="s">&quot;level&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;level&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>徐成期望前面定义的子命令作为第一个参数传入。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">if</span> <span class="nb">len</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">)</span> <span class="p">&lt;</span> <span class="mi">2</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;expected &#39;foo&#39; or &#39;bar&#39; subcommands&quot;</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>检查哪一个子命令被调用了。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">switch</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>每个子命令，都会解析自己的 flag 并允许它访问后续的参数。</p>
+
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre>    <span class="k">case</span> <span class="s">&quot;foo&quot;</span><span class="p">:</span>
+        <span class="nx">fooCmd</span><span class="p">.</span><span class="nx">Parse</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;subcommand &#39;foo&#39;&quot;</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;  enable:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="nx">fooEnable</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;  name:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="nx">fooName</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;  tail:&quot;</span><span class="p">,</span> <span class="nx">fooCmd</span><span class="p">.</span><span class="nx">Args</span><span class="p">())</span>
+    <span class="k">case</span> <span class="s">&quot;bar&quot;</span><span class="p">:</span>
+        <span class="nx">barCmd</span><span class="p">.</span><span class="nx">Parse</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Args</span><span class="p">[</span><span class="mi">2</span><span class="p">:])</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;subcommand &#39;bar&#39;&quot;</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;  level:&quot;</span><span class="p">,</span> <span class="o">*</span><span class="nx">barLevel</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;  tail:&quot;</span><span class="p">,</span> <span class="nx">barCmd</span><span class="p">.</span><span class="nx">Args</span><span class="p">())</span>
+    <span class="k">default</span><span class="p">:</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;expected &#39;foo&#39; or &#39;bar&#39; subcommands&quot;</span><span class="p">)</span>
+        <span class="nx">os</span><span class="p">.</span><span class="nx">Exit</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> go build command-line-subcommands.go 
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>首先调用 foo 子命令。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> ./command-line-subcommands foo -enable -name<span class="o">=</span>joe a1 a2
+<span class="go">subcommand &#39;foo&#39;</span>
+<span class="go">  enable: true</span>
+<span class="go">  name: joe</span>
+<span class="go">  tail: [a1 a2]</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>然后试一下 bar 子命令。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> ./command-line-subcommands bar -level <span class="m">8</span> a1
+<span class="go">subcommand &#39;bar&#39;</span>
+<span class="go">  level: 8</span>
+<span class="go">  tail: [a1]</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>但是 bar 不接受 foo 的 flag（enable）。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> ./command-line-subcommands bar -enable a1
+<span class="go">flag provided but not defined: -enable</span>
+<span class="go">Usage of bar:</span>
+<span class="go">  -level int</span>
+<span class="go">    	level</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>接下来我们会学习程序获取参数的另一种常见方式——环境变量。</p>
+
+          </td>
+          <td class="code empty">
+	        
+            
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="/environment-variables.html" type="text/html">环境变量</a>.
+      </p>
+      
+      <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/command-line-subcommands">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+  </body>
+</html>

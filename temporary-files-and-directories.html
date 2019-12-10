@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Go by Example 中文版：临时文件和目录</title>
+    <link rel="stylesheet" href="/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-89386915-2');
+    </script>
+  </head>
+  <body>
+    <div class="example" id="temporary-files-and-directories">
+      <h2><a href="/" type="text/html">Go by Example 中文版</a>：临时文件和目录</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>在程序运行时，我们经常创建一些运行时用到，程序结束后就不再使用的数据。
+<em>临时目录和文件</em> 对于上面的情况很有用，因为它不会随着时间的推移而污染文件系统。</p>
+
+          </td>
+          <td class="code leading">
+	        <a href="http://play.golang.org/p/C6OvqAeQX1X"><img title="Run code" src="/play.png" class="run" /></a>
+            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io/ioutil&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;path/filepath&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">check</span><span class="p">(</span><span class="nx">e</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>创建临时文件最简单的方法是调用 <code>ioutil.TempFile</code> 函数。
+它会创建并打开文件，我们可以对文件进行读写。
+函数的第一个参数传 <code>&quot;&quot;</code>，<code>ioutil.TempFile</code> 会在操作系统的默认位置下创建该文件。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">TempFile</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;sample&quot;</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>打印临时文件的名称。
+文件名以 <code>ioutil.TempFile</code> 函数的第二个参数作为前缀，
+剩余的部分会自动生成，以确保并发调用时，生成不重复的文件名。
+在类 Unix 操作系统下，临时目录一般是 <code>/tmp</code>。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Temp file name:&quot;</span><span class="p">,</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>defer 删除该文件。
+尽管操作系统会自动在某个时间清理临时文件，但手动清理是一个好习惯。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Remove</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们可以向文件写入一些数据。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">})</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>如果需要写入多个临时文件，最好是为其创建一个临时 *目录*。
+<code>ioutil.TempDir</code> 的参数与 <code>TempFile</code> 相同，
+但是它返回的是一个 *目录名*，而不是一个打开的文件。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">dname</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">TempDir</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;sampledir&quot;</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Temp dir name:&quot;</span><span class="p">,</span> <span class="nx">dname</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">RemoveAll</span><span class="p">(</span><span class="nx">dname</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>现在，我们可以通过拼接临时目录和临时文件合成完整的临时文件路径，并写入数据。</p>
+
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre>    <span class="nx">fname</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Join</span><span class="p">(</span><span class="nx">dname</span><span class="p">,</span> <span class="s">&quot;file1&quot;</span><span class="p">)</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">WriteFile</span><span class="p">(</span><span class="nx">fname</span><span class="p">,</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="mo">0666</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> go run temporary-files-and-directories.go
+<span class="go">Temp file name: /tmp/sample610887201</span>
+<span class="go">Temp dir name: /tmp/sampledir898854668</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="/testing.html" type="text/html">单元测试</a>.
+      </p>
+      
+      <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/temporary-files-and-directories">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Go by Example 中文版：单元测试</title>
+    <link rel="stylesheet" href="/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-89386915-2');
+    </script>
+  </head>
+  <body>
+    <div class="example" id="testing">
+      <h2><a href="/" type="text/html">Go by Example 中文版</a>：单元测试</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>想要写出好的 Go 程序，单元测试是很重要的一部分。
+<code>testing</code> 包为提供了编写单元测试所需的工具，写好单元测试后，我们可以通过 <code>go test</code> 命令运行测试。</p>
+
+          </td>
+          <td class="code empty leading">
+	        
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>为方便演示，例子的代码位于 <code>main</code> 包，实际上，单元测试的代码可以位于任何包下。
+测试代码通常与需要被测试的代码位于同一个包下。</p>
+
+          </td>
+          <td class="code leading">
+	        <a href="http://play.golang.org/p/pkk71tBIs0P"><img title="Run code" src="/play.png" class="run" /></a>
+            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;testing&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们要测试下面这个简单的函数——返回最小值。
+一般地，需要被测试的代码应该在类似于 <code>intutils.go</code> 的文件下，
+其对应的测试文件应该被命名为 <code>intutils_test.go</code>。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">IntMin</span><span class="p">(</span><span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">a</span> <span class="p">&lt;</span> <span class="nx">b</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">a</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">b</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>通常编写一个名称以 <code>Test</code> 开头的函数来创建测试。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">TestIntMinBasic</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">ans</span> <span class="o">:=</span> <span class="nx">IntMin</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">ans</span> <span class="o">!=</span> <span class="o">-</span><span class="mi">2</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>t.Error*</code> 会报告测试失败的信息，然后继续运行测试。
+<code>t.Fail*</code> 会报告测试失败的信息，然后立即终止测试。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>        <span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;IntMin(2, -2) = %d; want -2&quot;</span><span class="p">,</span> <span class="nx">ans</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>单元测试可以重复，所以会经常使用 <em>表驱动</em> 风格编写单元测试，
+表中列出了输入数据，预期输出，使用循环，遍历并执行测试逻辑。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">TestIntMinTableDriven</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kd">var</span> <span class="nx">tests</span> <span class="p">=</span> <span class="p">[]</span><span class="kd">struct</span> <span class="p">{</span>
+        <span class="nx">a</span><span class="p">,</span> <span class="nx">b</span> <span class="kt">int</span>
+        <span class="nx">want</span> <span class="kt">int</span>
+    <span class="p">}{</span>
+        <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">},</span>
+        <span class="p">{</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
+        <span class="p">{</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="p">},</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>t.Run 可以运行一个 &ldquo;subtests&rdquo; 子测试，一个子测试对应表中一行数据。
+运行 <code>go test -v</code> 时，他们会分开显示。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">tt</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">tests</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre>        <span class="nx">testname</span> <span class="o">:=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Sprintf</span><span class="p">(</span><span class="s">&quot;%d,%d&quot;</span><span class="p">,</span> <span class="nx">tt</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">tt</span><span class="p">.</span><span class="nx">b</span><span class="p">)</span>
+        <span class="nx">t</span><span class="p">.</span><span class="nx">Run</span><span class="p">(</span><span class="nx">testname</span><span class="p">,</span> <span class="kd">func</span><span class="p">(</span><span class="nx">t</span> <span class="o">*</span><span class="nx">testing</span><span class="p">.</span><span class="nx">T</span><span class="p">)</span> <span class="p">{</span>
+            <span class="nx">ans</span> <span class="o">:=</span> <span class="nx">IntMin</span><span class="p">(</span><span class="nx">tt</span><span class="p">.</span><span class="nx">a</span><span class="p">,</span> <span class="nx">tt</span><span class="p">.</span><span class="nx">b</span><span class="p">)</span>
+            <span class="k">if</span> <span class="nx">ans</span> <span class="o">!=</span> <span class="nx">tt</span><span class="p">.</span><span class="nx">want</span> <span class="p">{</span>
+                <span class="nx">t</span><span class="p">.</span><span class="nx">Errorf</span><span class="p">(</span><span class="s">&quot;got %d, want %d&quot;</span><span class="p">,</span> <span class="nx">ans</span><span class="p">,</span> <span class="nx">tt</span><span class="p">.</span><span class="nx">want</span><span class="p">)</span>
+            <span class="p">}</span>
+        <span class="p">})</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>以啰嗦模式运行当前项目下的所有测试。</p>
+
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> go <span class="nb">test</span> -v
+<span class="go">== RUN   TestIntMinBasic</span>
+<span class="go">--- PASS: TestIntMinBasic (0.00s)</span>
+<span class="go">=== RUN   TestIntMinTableDriven</span>
+<span class="go">=== RUN   TestIntMinTableDriven/0,1</span>
+<span class="go">=== RUN   TestIntMinTableDriven/1,0</span>
+<span class="go">=== RUN   TestIntMinTableDriven/2,-2</span>
+<span class="go">=== RUN   TestIntMinTableDriven/0,-1</span>
+<span class="go">=== RUN   TestIntMinTableDriven/-1,0</span>
+<span class="go">--- PASS: TestIntMinTableDriven (0.00s)</span>
+<span class="go">    --- PASS: TestIntMinTableDriven/0,1 (0.00s)</span>
+<span class="go">    --- PASS: TestIntMinTableDriven/1,0 (0.00s)</span>
+<span class="go">    --- PASS: TestIntMinTableDriven/2,-2 (0.00s)</span>
+<span class="go">    --- PASS: TestIntMinTableDriven/0,-1 (0.00s)</span>
+<span class="go">    --- PASS: TestIntMinTableDriven/-1,0 (0.00s)</span>
+<span class="go">PASS</span>
+<span class="go">ok  	examples/testing	0.023s</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="/command-line-arguments.html" type="text/html">命令行参数</a>.
+      </p>
+      
+      <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/testing">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+  </body>
+</html>

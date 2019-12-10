@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <title>Go by Example 中文版：目录</title>
+    <link rel="stylesheet" href="/site.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'UA-89386915-2');
+    </script>
+  </head>
+  <body>
+    <div class="example" id="directories">
+      <h2><a href="/" type="text/html">Go by Example 中文版</a>：目录</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>对于操作文件系统中的 *目录*，Go 提供了几个非常有用的函数。</p>
+
+          </td>
+          <td class="code empty leading">
+	        
+            
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        <a href="http://play.golang.org/p/yRiZtHK13cC"><img title="Run code" src="/play.png" class="run" /></a>
+            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;io/ioutil&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;path/filepath&quot;</span>
+<span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">check</span><span class="p">(</span><span class="nx">e</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>在当前工作目录下，创建一个子目录。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">err</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Mkdir</span><span class="p">(</span><span class="s">&quot;subdir&quot;</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>创建这个临时目录后，一个好习惯是：使用 <code>defer</code> 删除这个目录。
+<code>os.RemoveAll</code> 会删除整个目录（类似于 <code>rm -rf</code>）。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">RemoveAll</span><span class="p">(</span><span class="s">&quot;subdir&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>创建一个用于创建临时文件的函数。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">createEmptyFile</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+        <span class="nx">d</span> <span class="o">:=</span> <span class="p">[]</span><span class="nb">byte</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">)</span>
+        <span class="nx">check</span><span class="p">(</span><span class="nx">ioutil</span><span class="p">.</span><span class="nx">WriteFile</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">d</span><span class="p">,</span> <span class="mo">0644</span><span class="p">))</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">createEmptyFile</span><span class="p">(</span><span class="s">&quot;subdir/file1&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们还可以创建一个有层级的目录，使用 <code>MkdirAll</code> 函数，并包含其父目录。
+这个类似于命令 <code>mkdir -p</code>。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">MkdirAll</span><span class="p">(</span><span class="s">&quot;subdir/parent/child&quot;</span><span class="p">,</span> <span class="mo">0755</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">createEmptyFile</span><span class="p">(</span><span class="s">&quot;subdir/parent/file2&quot;</span><span class="p">)</span>
+    <span class="nx">createEmptyFile</span><span class="p">(</span><span class="s">&quot;subdir/parent/file3&quot;</span><span class="p">)</span>
+    <span class="nx">createEmptyFile</span><span class="p">(</span><span class="s">&quot;subdir/parent/child/file4&quot;</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>ReadDir</code> 列出目录的内容，返回一个 <code>os.FileInfo</code> 类型的切片对象。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">c</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">ReadDir</span><span class="p">(</span><span class="s">&quot;subdir/parent&quot;</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Listing subdir/parent&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">entry</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">c</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">Name</span><span class="p">(),</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">IsDir</span><span class="p">())</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>Chdir</code> 可以修改当前工作目录，类似于 <code>cd</code>。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Chdir</span><span class="p">(</span><span class="s">&quot;subdir/parent/child&quot;</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>当我们列出 <em>当前</em> 目录，就可以看到 <code>subdir/parent/child</code> 的内容了。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">c</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">ReadDir</span><span class="p">(</span><span class="s">&quot;.&quot;</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Listing subdir/parent/child&quot;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">entry</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">c</span> <span class="p">{</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">Name</span><span class="p">(),</span> <span class="nx">entry</span><span class="p">.</span><span class="nx">IsDir</span><span class="p">())</span>
+    <span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>cd</code> 回到最开始的地方。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">err</span> <span class="p">=</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Chdir</span><span class="p">(</span><span class="s">&quot;../../..&quot;</span><span class="p">)</span>
+    <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>当然，我们也可以遍历一个目录及其所有子目录。
+<code>Walk</code> 接受一个路径和回调函数，用于处理访问到的每个目录和文件。</p>
+
+          </td>
+          <td class="code leading">
+	        
+            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Visiting subdir&quot;</span><span class="p">)</span>
+    <span class="nx">err</span> <span class="p">=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Walk</span><span class="p">(</span><span class="s">&quot;subdir&quot;</span><span class="p">,</span> <span class="nx">visit</span><span class="p">)</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>filepath.Walk</code> 遍历访问到每一个目录和文件后，都会调用 <code>visit</code>。</p>
+
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">visit</span><span class="p">(</span><span class="nx">p</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">info</span> <span class="nx">os</span><span class="p">.</span><span class="nx">FileInfo</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span> <span class="kt">error</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">err</span>
+    <span class="p">}</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot; &quot;</span><span class="p">,</span> <span class="nx">p</span><span class="p">,</span> <span class="nx">info</span><span class="p">.</span><span class="nx">IsDir</span><span class="p">())</span>
+    <span class="k">return</span> <span class="kc">nil</span>
+<span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+	        
+            <div class="highlight"><pre><span class="gp">$</span> go run directories.go
+<span class="go">Listing subdir/parent</span>
+<span class="go">  child true</span>
+<span class="go">  file2 false</span>
+<span class="go">  file3 false</span>
+<span class="go">Listing subdir/parent/child</span>
+<span class="go">  file4 false</span>
+<span class="go">Visiting subdir</span>
+<span class="go">  subdir true</span>
+<span class="go">  subdir/file1 false</span>
+<span class="go">  subdir/parent true</span>
+<span class="go">  subdir/parent/child true</span>
+<span class="go">  subdir/parent/child/file4 false</span>
+<span class="go">  subdir/parent/file2 false</span>
+<span class="go">  subdir/parent/file3 false</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="/temporary-files-and-directories.html" type="text/html">临时文件和目录</a>.
+      </p>
+      
+      <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/directories">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+      </p>
+    </div>
+  </body>
+</html>
