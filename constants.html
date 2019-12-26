@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：常量</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 常量</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'variables';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'for';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="constants">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：常量</h2>
+      <h2><a href="./">Go by Example 中文版</a>: 常量</h2>
       
       <table>
         
@@ -24,8 +32,8 @@
 
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/GVCgbfFmrM"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/GVCgbfFmrM"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -36,8 +44,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 <span class="kn">import</span> <span class="s">&quot;math&quot;</span>
 </pre></div>
 
@@ -50,8 +58,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">const</span> <span class="nx">s</span> <span class="kt">string</span> <span class="p">=</span> <span class="s">&quot;constant&quot;</span>
+            
+          <div class="highlight"><pre><span class="kd">const</span> <span class="nx">s</span> <span class="kt">string</span> <span class="p">=</span> <span class="s">&quot;constant&quot;</span>
 </pre></div>
 
           </td>
@@ -62,8 +70,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
 </pre></div>
 
@@ -77,8 +85,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="kd">const</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">500000000</span>
+            
+          <div class="highlight"><pre>    <span class="kd">const</span> <span class="nx">n</span> <span class="p">=</span> <span class="mi">500000000</span>
 </pre></div>
 
           </td>
@@ -90,8 +98,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="kd">const</span> <span class="nx">d</span> <span class="p">=</span> <span class="mf">3e20</span> <span class="o">/</span> <span class="nx">n</span>
+            
+          <div class="highlight"><pre>    <span class="kd">const</span> <span class="nx">d</span> <span class="p">=</span> <span class="mf">3e20</span> <span class="o">/</span> <span class="nx">n</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">d</span><span class="p">)</span>
 </pre></div>
 
@@ -105,8 +113,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">int64</span><span class="p">(</span><span class="nx">d</span><span class="p">))</span>
+            
+          <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nb">int64</span><span class="p">(</span><span class="nx">d</span><span class="p">))</span>
 </pre></div>
 
           </td>
@@ -120,8 +128,8 @@
 
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nx">Sin</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span>
+            
+          <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">math</span><span class="p">.</span><span class="nx">Sin</span><span class="p">(</span><span class="nx">n</span><span class="p">))</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -137,8 +145,8 @@
             
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run constant.go 
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run constant.go 
 <span class="go">constant</span>
 <span class="go">6e+11</span>
 <span class="go">600000000000</span>
@@ -152,12 +160,17 @@
       
       
       <p class="next">
-        下一个例子: <a href="/for.html" type="text/html">For 循环</a>.
+        下一个例子: <a href="for.html">For 循环</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/constants">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"math\"\u000A');codeLines.push('const s string = \"constant\"\u000A');codeLines.push('func main() {\u000A    fmt.Println(s)\u000A');codeLines.push('    const n = 500000000\u000A');codeLines.push('    const d = 3e20 / n\u000A    fmt.Println(d)\u000A');codeLines.push('    fmt.Println(int64(d))\u000A');codeLines.push('    fmt.Println(math.Sin(n))\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>

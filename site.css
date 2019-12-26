@@ -29,6 +29,16 @@ body {
 ol, ul {
 	list-style: none;
 }
+li {
+    padding: 2px;
+}
+p a, li a {
+    text-decoration : none;
+    border-bottom: #777 1px solid;
+}
+p a:hover, li a:hover{
+    border-bottom: #000 2px solid;
+}
 blockquote, q {
 	quotes: none;
 }
@@ -85,9 +95,9 @@ p.footer a, p.footer a:visited {
     color: grey;
 }
 div#intro {
-    width: 420px;
-    min-width: 420px;
-    max-width: 420px;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
     margin-left: auto;
     margin-right: auto;
     margin-bottom: 120px;
@@ -136,10 +146,16 @@ pre, code {
     font-size: 14px; line-height: 18px;
     font-family: 'Menlo', 'Monaco', 'Consolas', 'Lucida Console', monospace;
 }
-img.run {
+img.copy, img.run {
   height: 16px;
   width: 16px;
   float: right
+}
+img.copy, img.run {
+  cursor: pointer;
+}
+img.copy {
+    margin-right: 4px;
 }
 
 /* Syntax highlighting */

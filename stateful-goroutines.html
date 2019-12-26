@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：Go 状态协程</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: Go 状态协程</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'mutexes';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'sorting';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="stateful-goroutines">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：Go 状态协程</h2>
+      <h2><a href="./">Go by Example 中文版</a>: Go 状态协程</h2>
       
       <table>
         
@@ -28,8 +36,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
 
           </td>
           <td class="code empty leading">
-	        
             
+          
           </td>
         </tr>
         
@@ -38,8 +46,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
             
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/TlDDgSJ3zxu"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/TlDDgSJ3zxu"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -50,8 +58,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
     <span class="s">&quot;math/rand&quot;</span>
     <span class="s">&quot;sync/atomic&quot;</span>
@@ -72,8 +80,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">type</span> <span class="nx">readOp</span> <span class="kd">struct</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">type</span> <span class="nx">readOp</span> <span class="kd">struct</span> <span class="p">{</span>
     <span class="nx">key</span>  <span class="kt">int</span>
     <span class="nx">resp</span> <span class="kd">chan</span> <span class="kt">int</span>
 <span class="p">}</span>
@@ -92,8 +100,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
 </pre></div>
 
           </td>
@@ -105,8 +113,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">readOps</span> <span class="kt">uint64</span> <span class="p">=</span> <span class="mi">0</span>
+            
+          <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">readOps</span> <span class="kt">uint64</span> <span class="p">=</span> <span class="mi">0</span>
     <span class="kd">var</span> <span class="nx">writeOps</span> <span class="kt">uint64</span> <span class="p">=</span> <span class="mi">0</span>
 </pre></div>
 
@@ -120,8 +128,8 @@ state 跨多个 Go 协程同步访问。另一个选择是使用内置的 Go
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">reads</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="o">*</span><span class="nx">readOp</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">reads</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="o">*</span><span class="nx">readOp</span><span class="p">)</span>
     <span class="nx">writes</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="o">*</span><span class="nx">writeOp</span><span class="p">)</span>
 </pre></div>
 
@@ -137,8 +145,8 @@ map一样，不过这里是被这个状态协程私有的。这个 Go 协程
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
         <span class="kd">var</span> <span class="nx">state</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span>
         <span class="k">for</span> <span class="p">{</span>
             <span class="k">select</span> <span class="p">{</span>
@@ -164,8 +172,8 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">r</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">r</span> <span class="p">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">r</span><span class="o">++</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">r</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">r</span> <span class="p">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">r</span><span class="o">++</span> <span class="p">{</span>
         <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
             <span class="k">for</span> <span class="p">{</span>
                 <span class="nx">read</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">readOp</span><span class="p">{</span>
@@ -189,8 +197,8 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">w</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">w</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">w</span><span class="o">++</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">w</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">w</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">w</span><span class="o">++</span> <span class="p">{</span>
         <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
             <span class="k">for</span> <span class="p">{</span>
                 <span class="nx">write</span> <span class="o">:=</span> <span class="o">&amp;</span><span class="nx">writeOp</span><span class="p">{</span>
@@ -215,8 +223,8 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
 </pre></div>
 
           </td>
@@ -228,8 +236,8 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
 
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre>    <span class="nx">readOpsFinal</span> <span class="o">:=</span> <span class="nx">atomic</span><span class="p">.</span><span class="nx">LoadUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">readOps</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">readOpsFinal</span> <span class="o">:=</span> <span class="nx">atomic</span><span class="p">.</span><span class="nx">LoadUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">readOps</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;readOps:&quot;</span><span class="p">,</span> <span class="nx">readOpsFinal</span><span class="p">)</span>
     <span class="nx">writeOpsFinal</span> <span class="o">:=</span> <span class="nx">atomic</span><span class="p">.</span><span class="nx">LoadUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">writeOps</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;writeOps:&quot;</span><span class="p">,</span> <span class="nx">writeOpsFinal</span><span class="p">)</span>
@@ -250,8 +258,8 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run stateful-goroutines.go
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run stateful-goroutines.go
 <span class="go">readOps: 71708</span>
 <span class="go">writeOps: 7177</span>
 </pre></div>
@@ -268,8 +276,8 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
 
           </td>
           <td class="code empty">
-	        
             
+          
           </td>
         </tr>
         
@@ -277,12 +285,17 @@ Go 协程的读取请求。每个读取请求需要构造一个 <code>readOp</co
       
       
       <p class="next">
-        下一个例子: <a href="/sorting.html" type="text/html">排序</a>.
+        下一个例子: <a href="sorting.html">排序</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/stateful-goroutines">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"math/rand\"\u000A    \"sync/atomic\"\u000A    \"time\"\u000A)\u000A');codeLines.push('type readOp struct {\u000A    key  int\u000A    resp chan int\u000A}\u000Atype writeOp struct {\u000A    key  int\u000A    val  int\u000A    resp chan bool\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    var readOps uint64 = 0\u000A    var writeOps uint64 = 0\u000A');codeLines.push('    reads := make(chan *readOp)\u000A    writes := make(chan *writeOp)\u000A');codeLines.push('    go func() {\u000A        var state = make(map[int]int)\u000A        for {\u000A            select {\u000A            case read := \x3C-reads:\u000A                read.resp \x3C- state[read.key]\u000A            case write := \x3C-writes:\u000A                state[write.key] = write.val\u000A                write.resp \x3C- true\u000A            }\u000A        }\u000A    }()\u000A');codeLines.push('    for r := 0; r \x3C 100; r++ {\u000A        go func() {\u000A            for {\u000A                read := &readOp{\u000A                    key:  rand.Intn(5),\u000A                    resp: make(chan int)}\u000A                reads \x3C- read\u000A                \x3C-read.resp\u000A                atomic.AddUint64(&readOps, 1)\u000A                time.Sleep(time.Millisecond)\u000A            }\u000A        }()\u000A    }\u000A');codeLines.push('    for w := 0; w \x3C 10; w++ {\u000A        go func() {\u000A            for {\u000A                write := &writeOp{\u000A                    key:  rand.Intn(5),\u000A                    val:  rand.Intn(100),\u000A                    resp: make(chan bool)}\u000A                writes \x3C- write\u000A                \x3C-write.resp\u000A                atomic.AddUint64(&writeOps, 1)\u000A                time.Sleep(time.Millisecond)\u000A            }\u000A        }()\u000A    }\u000A');codeLines.push('    time.Sleep(time.Second)\u000A');codeLines.push('    readOpsFinal := atomic.LoadUint64(&readOps)\u000A    fmt.Println(\"readOps:\", readOpsFinal)\u000A    writeOpsFinal := atomic.LoadUint64(&writeOps)\u000A    fmt.Println(\"writeOps:\", writeOpsFinal)\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>

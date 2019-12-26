@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：数组</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 数组</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'switch';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'slices';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="arrays">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：数组</h2>
+      <h2><a href="./">Go by Example 中文版</a>: 数组</h2>
       
       <table>
         
@@ -24,8 +32,8 @@
 
           </td>
           <td class="code empty leading">
-	        
             
+          
           </td>
         </tr>
         
@@ -34,8 +42,8 @@
             
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/eDkopCtDQr"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/eDkopCtDQr"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -46,8 +54,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 </pre></div>
 
           </td>
@@ -58,8 +66,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
 </pre></div>
 
           </td>
@@ -73,8 +81,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">a</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span>
+            
+          <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">a</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;emp:&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
 </pre></div>
 
@@ -88,8 +96,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
+            
+          <div class="highlight"><pre>    <span class="nx">a</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="p">=</span> <span class="mi">100</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;set:&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;get:&quot;</span><span class="p">,</span> <span class="nx">a</span><span class="p">[</span><span class="mi">4</span><span class="p">])</span>
 </pre></div>
@@ -103,8 +111,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;len:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
+            
+          <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;len:&quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="nx">a</span><span class="p">))</span>
 </pre></div>
 
           </td>
@@ -116,8 +124,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">b</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
+            
+          <div class="highlight"><pre>    <span class="nx">b</span> <span class="o">:=</span> <span class="p">[</span><span class="mi">5</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">}</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;dcl:&quot;</span><span class="p">,</span> <span class="nx">b</span><span class="p">)</span>
 </pre></div>
 
@@ -131,8 +139,8 @@
 
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">twoD</span> <span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span>
+            
+          <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">twoD</span> <span class="p">[</span><span class="mi">2</span><span class="p">][</span><span class="mi">3</span><span class="p">]</span><span class="kt">int</span>
     <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="mi">2</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
         <span class="k">for</span> <span class="nx">j</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">j</span> <span class="p">&lt;</span> <span class="mi">3</span><span class="p">;</span> <span class="nx">j</span><span class="o">++</span> <span class="p">{</span>
             <span class="nx">twoD</span><span class="p">[</span><span class="nx">i</span><span class="p">][</span><span class="nx">j</span><span class="p">]</span> <span class="p">=</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">j</span>
@@ -156,8 +164,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run arrays.go
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run arrays.go
 <span class="go">emp: [0 0 0 0 0]</span>
 <span class="go">set: [0 0 0 0 100]</span>
 <span class="go">get: 100</span>
@@ -176,8 +184,8 @@
 
           </td>
           <td class="code empty">
-	        
             
+          
           </td>
         </tr>
         
@@ -185,12 +193,17 @@
       
       
       <p class="next">
-        下一个例子: <a href="/slices.html" type="text/html">切片</a>.
+        下一个例子: <a href="slices.html">切片</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/arrays">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    var a [5]int\u000A    fmt.Println(\"emp:\", a)\u000A');codeLines.push('    a[4] = 100\u000A    fmt.Println(\"set:\", a)\u000A    fmt.Println(\"get:\", a[4])\u000A');codeLines.push('    fmt.Println(\"len:\", len(a))\u000A');codeLines.push('    b := [5]int{1, 2, 3, 4, 5}\u000A    fmt.Println(\"dcl:\", b)\u000A');codeLines.push('    var twoD [2][3]int\u000A    for i := 0; i \x3C 2; i++ {\u000A        for j := 0; j \x3C 3; j++ {\u000A            twoD[i][j] = i + j\u000A        }\u000A    }\u000A    fmt.Println(\"2d: \", twoD)\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>

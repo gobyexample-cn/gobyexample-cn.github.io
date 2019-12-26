@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：超时处理</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 超时处理</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'select';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'non-blocking-channel-operations';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="timeouts">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：超时处理</h2>
+      <h2><a href="./">Go by Example 中文版</a>: 超时处理</h2>
       
       <table>
         
@@ -26,8 +34,8 @@
 
           </td>
           <td class="code empty leading">
-	        
             
+          
           </td>
         </tr>
         
@@ -36,8 +44,8 @@
             
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/Q2Xs5EZLwr"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/Q2Xs5EZLwr"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -48,8 +56,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;time&quot;</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;time&quot;</span>
 <span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 </pre></div>
 
@@ -61,8 +69,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
 </pre></div>
 
           </td>
@@ -75,8 +83,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">c1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">c1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
         <span class="nx">c1</span> <span class="o">&lt;-</span> <span class="s">&quot;result 1&quot;</span>
@@ -96,8 +104,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">select</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre>    <span class="k">select</span> <span class="p">{</span>
     <span class="k">case</span> <span class="nx">res</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">c1</span><span class="p">:</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
     <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">1</span><span class="p">):</span>
@@ -115,8 +123,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">c2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">c2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
         <span class="nx">c2</span> <span class="o">&lt;-</span> <span class="s">&quot;result 2&quot;</span>
@@ -139,8 +147,8 @@
 
           </td>
           <td class="code empty">
-	        
             
+          
           </td>
         </tr>
         
@@ -154,8 +162,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run timeouts.go 
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run timeouts.go 
 <span class="go">timeout 1</span>
 <span class="go">result 2</span>
 </pre></div>
@@ -171,8 +179,8 @@
 
           </td>
           <td class="code empty">
-	        
             
+          
           </td>
         </tr>
         
@@ -180,12 +188,17 @@
       
       
       <p class="next">
-        下一个例子: <a href="/non-blocking-channel-operations.html" type="text/html">非阻塞通道操作</a>.
+        下一个例子: <a href="non-blocking-channel-operations.html">非阻塞通道操作</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/timeouts">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"time\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    c1 := make(chan string, 1)\u000A    go func() {\u000A        time.Sleep(time.Second * 2)\u000A        c1 \x3C- \"result 1\"\u000A    }()\u000A');codeLines.push('    select {\u000A    case res := \x3C-c1:\u000A        fmt.Println(res)\u000A    case \x3C-time.After(time.Second * 1):\u000A        fmt.Println(\"timeout 1\")\u000A    }\u000A');codeLines.push('    c2 := make(chan string, 1)\u000A    go func() {\u000A        time.Sleep(time.Second * 2)\u000A        c2 \x3C- \"result 2\"\u000A    }()\u000A    select {\u000A    case res := \x3C-c2:\u000A        fmt.Println(res)\u000A    case \x3C-time.After(time.Second * 3):\u000A        fmt.Println(\"timeout 2\")\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>

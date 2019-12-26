@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：WaitGroups</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: WaitGroup</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'worker-pools';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'rate-limiting';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="waitgroups">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：WaitGroups</h2>
+      <h2><a href="./">Go by Example 中文版</a>: WaitGroup</h2>
       
       <table>
         
@@ -24,8 +32,8 @@
 
           </td>
           <td class="code empty leading">
-	        
             
+          
           </td>
         </tr>
         
@@ -34,8 +42,8 @@
             
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/N95gesMtMX3"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/N95gesMtMX3"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -46,8 +54,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
     <span class="s">&quot;sync&quot;</span>
     <span class="s">&quot;time&quot;</span>
@@ -64,8 +72,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">worker</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">wg</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">worker</span><span class="p">(</span><span class="nx">id</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">wg</span> <span class="o">*</span><span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Worker %d starting\n&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span>
 </pre></div>
 
@@ -78,8 +86,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;Worker %d done\n&quot;</span><span class="p">,</span> <span class="nx">id</span><span class="p">)</span>
 </pre></div>
 
@@ -92,8 +100,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">wg</span><span class="p">.</span><span class="nx">Done</span><span class="p">()</span>
+            
+          <div class="highlight"><pre>    <span class="nx">wg</span><span class="p">.</span><span class="nx">Done</span><span class="p">()</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -105,8 +113,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
 </pre></div>
 
           </td>
@@ -118,8 +126,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+            
+          <div class="highlight"><pre>    <span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
 </pre></div>
 
           </td>
@@ -131,8 +139,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre>    <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">1</span><span class="p">;</span> <span class="nx">i</span> <span class="o">&lt;=</span> <span class="mi">5</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
         <span class="nx">wg</span><span class="p">.</span><span class="nx">Add</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
         <span class="k">go</span> <span class="nx">worker</span><span class="p">(</span><span class="nx">i</span><span class="p">,</span> <span class="o">&amp;</span><span class="nx">wg</span><span class="p">)</span>
     <span class="p">}</span>
@@ -147,8 +155,8 @@
 
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre>    <span class="nx">wg</span><span class="p">.</span><span class="nx">Wait</span><span class="p">()</span>
+            
+          <div class="highlight"><pre>    <span class="nx">wg</span><span class="p">.</span><span class="nx">Wait</span><span class="p">()</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -164,8 +172,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run waitgroups.go
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run waitgroups.go
 <span class="go">Worker 5 starting</span>
 <span class="go">Worker 3 starting</span>
 <span class="go">Worker 4 starting</span>
@@ -187,8 +195,8 @@
 
           </td>
           <td class="code empty">
-	        
             
+          
           </td>
         </tr>
         
@@ -196,12 +204,17 @@
       
       
       <p class="next">
-        下一个例子: <a href="/rate-limiting.html" type="text/html">速率限制</a>.
+        下一个例子: <a href="rate-limiting.html">速率限制</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/waitgroups">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"sync\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func worker(id int, wg *sync.WaitGroup) {\u000A    fmt.Printf(\"Worker %d starting\\n\", id)\u000A');codeLines.push('    time.Sleep(time.Second)\u000A    fmt.Printf(\"Worker %d done\\n\", id)\u000A');codeLines.push('    wg.Done()\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    var wg sync.WaitGroup\u000A');codeLines.push('    for i := 1; i \x3C= 5; i++ {\u000A        wg.Add(1)\u000A        go worker(i, &wg)\u000A    }\u000A');codeLines.push('    wg.Wait()\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>

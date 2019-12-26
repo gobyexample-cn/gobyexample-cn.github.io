@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：临时文件和目录</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 临时文件和目录</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'directories';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'testing';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="temporary-files-and-directories">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：临时文件和目录</h2>
+      <h2><a href="./">Go by Example 中文版</a>: 临时文件和目录</h2>
       
       <table>
         
@@ -25,8 +33,8 @@
 
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/C6OvqAeQX1X"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/C6OvqAeQX1X"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -37,8 +45,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&quot;fmt&quot;</span>
     <span class="s">&quot;io/ioutil&quot;</span>
     <span class="s">&quot;os&quot;</span>
@@ -54,8 +62,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">check</span><span class="p">(</span><span class="nx">e</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">check</span><span class="p">(</span><span class="nx">e</span> <span class="kt">error</span><span class="p">)</span> <span class="p">{</span>
     <span class="k">if</span> <span class="nx">e</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
         <span class="nb">panic</span><span class="p">(</span><span class="nx">e</span><span class="p">)</span>
     <span class="p">}</span>
@@ -70,8 +78,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
 </pre></div>
 
           </td>
@@ -85,8 +93,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">TempFile</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;sample&quot;</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">f</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">TempFile</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;sample&quot;</span><span class="p">)</span>
     <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 </pre></div>
 
@@ -102,8 +110,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Temp file name:&quot;</span><span class="p">,</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span>
+            
+          <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Temp file name:&quot;</span><span class="p">,</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span>
 </pre></div>
 
           </td>
@@ -116,8 +124,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Remove</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span>
+            
+          <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Remove</span><span class="p">(</span><span class="nx">f</span><span class="p">.</span><span class="nx">Name</span><span class="p">())</span>
 </pre></div>
 
           </td>
@@ -129,8 +137,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">})</span>
+            
+          <div class="highlight"><pre>    <span class="nx">_</span><span class="p">,</span> <span class="nx">err</span> <span class="p">=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Write</span><span class="p">([]</span><span class="kt">byte</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">})</span>
     <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 </pre></div>
 
@@ -145,8 +153,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="nx">dname</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">TempDir</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;sampledir&quot;</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">dname</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">TempDir</span><span class="p">(</span><span class="s">&quot;&quot;</span><span class="p">,</span> <span class="s">&quot;sampledir&quot;</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Temp dir name:&quot;</span><span class="p">,</span> <span class="nx">dname</span><span class="p">)</span>
 </pre></div>
 
@@ -158,8 +166,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">RemoveAll</span><span class="p">(</span><span class="nx">dname</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="k">defer</span> <span class="nx">os</span><span class="p">.</span><span class="nx">RemoveAll</span><span class="p">(</span><span class="nx">dname</span><span class="p">)</span>
 </pre></div>
 
           </td>
@@ -171,8 +179,8 @@
 
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre>    <span class="nx">fname</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Join</span><span class="p">(</span><span class="nx">dname</span><span class="p">,</span> <span class="s">&quot;file1&quot;</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">fname</span> <span class="o">:=</span> <span class="nx">filepath</span><span class="p">.</span><span class="nx">Join</span><span class="p">(</span><span class="nx">dname</span><span class="p">,</span> <span class="s">&quot;file1&quot;</span><span class="p">)</span>
     <span class="nx">err</span> <span class="p">=</span> <span class="nx">ioutil</span><span class="p">.</span><span class="nx">WriteFile</span><span class="p">(</span><span class="nx">fname</span><span class="p">,</span> <span class="p">[]</span><span class="kt">byte</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">},</span> <span class="mo">0666</span><span class="p">)</span>
     <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
 <span class="p">}</span>
@@ -190,8 +198,8 @@
             
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run temporary-files-and-directories.go
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run temporary-files-and-directories.go
 <span class="go">Temp file name: /tmp/sample610887201</span>
 <span class="go">Temp dir name: /tmp/sampledir898854668</span>
 </pre></div>
@@ -203,12 +211,17 @@
       
       
       <p class="next">
-        下一个例子: <a href="/testing.html" type="text/html">单元测试</a>.
+        下一个例子: <a href="testing.html">单元测试</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/temporary-files-and-directories">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"io/ioutil\"\u000A    \"os\"\u000A    \"path/filepath\"\u000A)\u000A');codeLines.push('func check(e error) {\u000A    if e != nil {\u000A        panic(e)\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    f, err := ioutil.TempFile(\"\", \"sample\")\u000A    check(err)\u000A');codeLines.push('    fmt.Println(\"Temp file name:\", f.Name())\u000A');codeLines.push('    defer os.Remove(f.Name())\u000A');codeLines.push('    _, err = f.Write([]byte{1, 2, 3, 4})\u000A    check(err)\u000A');codeLines.push('    dname, err := ioutil.TempDir(\"\", \"sampledir\")\u000A    fmt.Println(\"Temp dir name:\", dname)\u000A');codeLines.push('    defer os.RemoveAll(dname)\u000A');codeLines.push('    fname := filepath.Join(dname, \"file1\")\u000A    err = ioutil.WriteFile(fname, []byte{1, 2}, 0666)\u000A    check(err)\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>

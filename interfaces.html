@@ -1,20 +1,28 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-    <title>Go by Example 中文版：接口</title>
-    <link rel="stylesheet" href="/site.css">
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-89386915-2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-89386915-2');
-    </script>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 接口</title>
+    <link rel=stylesheet href="site.css">
   </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'methods';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'errors';
+          }
+          
+      }
+  </script>
   <body>
+
     <div class="example" id="interfaces">
-      <h2><a href="/" type="text/html">Go by Example 中文版</a>：接口</h2>
+      <h2><a href="./">Go by Example 中文版</a>: 接口</h2>
       
       <table>
         
@@ -24,8 +32,8 @@
 
           </td>
           <td class="code empty leading">
-	        
             
+          
           </td>
         </tr>
         
@@ -34,8 +42,8 @@
             
           </td>
           <td class="code leading">
-	        <a href="http://play.golang.org/p/KkqGnOUHK7m"><img title="Run code" src="/play.png" class="run" /></a>
-            <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
+            <a href="http://play.golang.org/p/KkqGnOUHK7m"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
           </td>
@@ -46,8 +54,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+            
+          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
 <span class="kn">import</span> <span class="s">&quot;math&quot;</span>
 </pre></div>
 
@@ -60,8 +68,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">type</span> <span class="nx">geometry</span> <span class="kd">interface</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">type</span> <span class="nx">geometry</span> <span class="kd">interface</span> <span class="p">{</span>
     <span class="nx">area</span><span class="p">()</span> <span class="kt">float64</span>
     <span class="nx">perim</span><span class="p">()</span> <span class="kt">float64</span>
 <span class="p">}</span>
@@ -77,8 +85,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">type</span> <span class="nx">rect</span> <span class="kd">struct</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">type</span> <span class="nx">rect</span> <span class="kd">struct</span> <span class="p">{</span>
     <span class="nx">width</span><span class="p">,</span> <span class="nx">height</span> <span class="kt">float64</span>
 <span class="p">}</span>
 <span class="kd">type</span> <span class="nx">circle</span> <span class="kd">struct</span> <span class="p">{</span>
@@ -96,8 +104,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">rect</span><span class="p">)</span> <span class="nx">area</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">rect</span><span class="p">)</span> <span class="nx">area</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">r</span><span class="p">.</span><span class="nx">width</span> <span class="o">*</span> <span class="nx">r</span><span class="p">.</span><span class="nx">height</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="p">(</span><span class="nx">r</span> <span class="nx">rect</span><span class="p">)</span> <span class="nx">perim</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
@@ -114,8 +122,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">circle</span><span class="p">)</span> <span class="nx">area</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">circle</span><span class="p">)</span> <span class="nx">area</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
     <span class="k">return</span> <span class="nx">math</span><span class="p">.</span><span class="nx">Pi</span> <span class="o">*</span> <span class="nx">c</span><span class="p">.</span><span class="nx">radius</span> <span class="o">*</span> <span class="nx">c</span><span class="p">.</span><span class="nx">radius</span>
 <span class="p">}</span>
 <span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="nx">circle</span><span class="p">)</span> <span class="nx">perim</span><span class="p">()</span> <span class="kt">float64</span> <span class="p">{</span>
@@ -134,8 +142,8 @@
 
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">measure</span><span class="p">(</span><span class="nx">g</span> <span class="nx">geometry</span><span class="p">)</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">measure</span><span class="p">(</span><span class="nx">g</span> <span class="nx">geometry</span><span class="p">)</span> <span class="p">{</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">g</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">area</span><span class="p">())</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">g</span><span class="p">.</span><span class="nx">perim</span><span class="p">())</span>
@@ -150,8 +158,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
+            
+          <div class="highlight"><pre><span class="kd">func</span> <span class="nx">main</span><span class="p">()</span> <span class="p">{</span>
     <span class="nx">r</span> <span class="o">:=</span> <span class="nx">rect</span><span class="p">{</span><span class="nx">width</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="nx">height</span><span class="p">:</span> <span class="mi">4</span><span class="p">}</span>
     <span class="nx">c</span> <span class="o">:=</span> <span class="nx">circle</span><span class="p">{</span><span class="nx">radius</span><span class="p">:</span> <span class="mi">5</span><span class="p">}</span>
 </pre></div>
@@ -166,8 +174,8 @@
 
           </td>
           <td class="code">
-	        
-            <div class="highlight"><pre>    <span class="nx">measure</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
+            
+          <div class="highlight"><pre>    <span class="nx">measure</span><span class="p">(</span><span class="nx">r</span><span class="p">)</span>
     <span class="nx">measure</span><span class="p">(</span><span class="nx">c</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -184,8 +192,8 @@
             
           </td>
           <td class="code leading">
-	        
-            <div class="highlight"><pre><span class="gp">$</span> go run interfaces.go
+            
+          <div class="highlight"><pre><span class="gp">$</span> go run interfaces.go
 <span class="go">{3 4}</span>
 <span class="go">12</span>
 <span class="go">14</span>
@@ -204,8 +212,8 @@
 
           </td>
           <td class="code empty">
-	        
             
+          
           </td>
         </tr>
         
@@ -213,12 +221,17 @@
       
       
       <p class="next">
-        下一个例子: <a href="/errors.html" type="text/html">错误处理</a>.
+        下一个例子: <a href="errors.html">错误处理</a>
       </p>
       
       <p class="footer">
-        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample/blob/master/examples/interfaces">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
       </p>
     </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"math\"\u000A');codeLines.push('type geometry interface {\u000A    area() float64\u000A    perim() float64\u000A}\u000A');codeLines.push('type rect struct {\u000A    width, height float64\u000A}\u000Atype circle struct {\u000A    radius float64\u000A}\u000A');codeLines.push('func (r rect) area() float64 {\u000A    return r.width * r.height\u000A}\u000Afunc (r rect) perim() float64 {\u000A    return 2*r.width + 2*r.height\u000A}\u000A');codeLines.push('func (c circle) area() float64 {\u000A    return math.Pi * c.radius * c.radius\u000A}\u000Afunc (c circle) perim() float64 {\u000A    return 2 * math.Pi * c.radius\u000A}\u000A');codeLines.push('func measure(g geometry) {\u000A    fmt.Println(g)\u000A    fmt.Println(g.area())\u000A    fmt.Println(g.perim())\u000A}\u000A');codeLines.push('func main() {\u000A    r := rect{width: 3, height: 4}\u000A    c := circle{radius: 5}\u000A');codeLines.push('    measure(r)\u000A    measure(c)\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
   </body>
 </html>
