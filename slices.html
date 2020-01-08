@@ -28,7 +28,8 @@
         
         <tr>
           <td class="docs">
-            <p><em>Slice</em> 是 Go 中一个重要的数据类型，它提供了比数组更强大的序列交互方式。</p>
+            <p><em>Slice</em> 是 Go 中一个关键的数据类型，是一个比数组更
+加强大的序列接口</p>
 
           </td>
           <td class="code empty leading">
@@ -42,7 +43,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/krJtatrQmuQ"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/GvSxh7IOfQs"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -75,9 +76,10 @@
         
         <tr>
           <td class="docs">
-            <p>与数组不同，slice 的类型仅由它所包含的元素的类型决定（与元素个数无关）。
-要创建一个长度不为 0 的空 slice，需要使用内建函数 <code>make</code>。
-这里我们创建了一个长度为 3 的 <code>string</code> 类型的 slice（初始值为零值）。</p>
+            <p>与数组不同，slice 的类型仅由它所包含的元素决定（不需要
+元素的个数）。要创建一个长度非零的空
+slice，需要使用内建的方法 <code>make</code>。这里我们创建了一
+个长度为3的 <code>string</code> 类型 slice（初始化为零值）。</p>
 
           </td>
           <td class="code leading">
@@ -121,9 +123,10 @@
         
         <tr>
           <td class="docs">
-            <p>除了基本操作外，slice 支持比数组更丰富的操作。比如 slice 支持内建函数 <code>append</code>，
-该函数会返回一个包含了一个或者多个新值的 slice。
-注意由于 <code>append</code> 可能返回一个新的 slice，我们需要接收其返回值。</p>
+            <p>除了基本操作外，slice 支持比数组更丰富的操作。
+其中一个是内建的 <code>append</code>，它返回一个包含了一个
+或者多个新值的 slice。注意由于 <code>append</code> 可能返回
+新的 slice，我们需要接受其返回值。</p>
 
           </td>
           <td class="code leading">
@@ -138,8 +141,8 @@
         
         <tr>
           <td class="docs">
-            <p>slice 还可以 <code>copy</code>。这里我们创建一个空的和 <code>s</code> 有相同长度的 slice——<code>c</code>，
-然后将 <code>s</code> 复制给 <code>c</code>。</p>
+            <p>Slice 也可以被 <code>copy</code>。这里我们创建一个空的和 <code>s</code> 有
+相同长度的 slice <code>c</code>，并且将 <code>s</code> 复制给 <code>c</code>。</p>
 
           </td>
           <td class="code leading">
@@ -154,8 +157,9 @@
         
         <tr>
           <td class="docs">
-            <p>slice 支持通过 <code>slice[low:high]</code> 语法进行“切片”操作。
-例如，右边的操作可以得到一个包含元素 <code>s[2]</code>、<code>s[3]</code> 和 <code>s[4]</code> 的 slice。</p>
+            <p>Slice 支持通过 <code>slice[low:high]</code> 语法进行“切片”操
+作。例如，这里得到一个包含元素 <code>s[2]</code>, <code>s[3]</code>,
+<code>s[4]</code> 的 slice。</p>
 
           </td>
           <td class="code leading">
@@ -169,7 +173,7 @@
         
         <tr>
           <td class="docs">
-            <p>这个 slice 包含从 <code>s[0]</code> 到 <code>s[5]</code>（不包含 5）的元素。</p>
+            <p>这个 slice 从 <code>s[0]</code> 切片到 <code>s[5]</code>（不包含）。</p>
 
           </td>
           <td class="code leading">
@@ -183,7 +187,7 @@
         
         <tr>
           <td class="docs">
-            <p>这个 slice 包含从 <code>s[2]</code>（包含 2）之后的元素。</p>
+            <p>这个 slice 从 <code>s[2]</code> （包含）开始切片。</p>
 
           </td>
           <td class="code leading">
@@ -211,7 +215,8 @@
         
         <tr>
           <td class="docs">
-            <p>Slice 可以组成多维数据结构。内部的 slice 长度可以不一致，这一点和多维数组不同。</p>
+            <p>Slice 可以组成多维数据结构。内部的 slice 长度可以不
+一致，这和多维数组不同。</p>
 
           </td>
           <td class="code">
@@ -237,7 +242,8 @@
         
         <tr>
           <td class="docs">
-            <p>注意，slice 和数组是不同的类型，但它们通过 <code>fmt.Println</code> 打印的输出结果是类似的。</p>
+            <p>注意，slice 和数组是不同的类型，但是它们通过 <code>fmt.Println</code> 打印
+结果类似。</p>
 
           </td>
           <td class="code leading">
@@ -261,7 +267,8 @@
         
         <tr>
           <td class="docs">
-            <p>看看这个由 Go 团队撰写的一篇<a href="http://blog.golang.org/2011/01/go-slices-usage-and-internals.html">很棒的博文</a>，了解更多关于 Go 中 slice 的设计和实现细节。</p>
+            <p>看看这个由 Go 团队撰写的一篇<a href="http://blog.golang.org/2011/01/go-slices-usage-and-internals.html">很棒的博文</a>，
+了解更多关于 Go 中 slice 的设计和实现细节。</p>
 
           </td>
           <td class="code empty leading">
@@ -272,7 +279,8 @@
         
         <tr>
           <td class="docs">
-            <p>现在，我们已经学习了数组和 slice，接下来我们将学习 Go 中的另一个重要的内建数据类型：map。</p>
+            <p>现在，我们学习了数组和 slice，接下来我们将学习
+Go 中的另一个关键的内建数据类型：map。</p>
 
           </td>
           <td class="code empty">
