@@ -31,18 +31,8 @@
             <p><em>switch</em> 是多分支情况时快捷的条件语句。</p>
 
           </td>
-          <td class="code empty leading">
-            
-          
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            
-          </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/SH5XvlMU2t"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/WzLq2Oyc2s-"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -98,9 +88,8 @@
         
         <tr>
           <td class="docs">
-            <p>在同一个 <code>case</code> 语句中，你可以使用逗号来分隔多个表
-达式。在这个例子中，我们还使用了可选的
-<code>default</code> 分支。</p>
+            <p>在同一个 <code>case</code> 语句中，你可以使用逗号来分隔多个表达式。
+在这个例子中，我们还使用了可选的 <code>default</code> 分支。</p>
 
           </td>
           <td class="code leading">
@@ -118,8 +107,8 @@
         
         <tr>
           <td class="docs">
-            <p>不带表达式的 <code>switch</code> 是实现 if/else 逻辑的另一种
-方式。这里还展示了 <code>case</code> 表达式也可以不使用常量。</p>
+            <p>不带表达式的 <code>switch</code> 是实现 if/else 逻辑的另一种方式。
+这里还展示了 <code>case</code> 表达式也可以不使用常量。</p>
 
           </td>
           <td class="code leading">
@@ -138,8 +127,8 @@
         
         <tr>
           <td class="docs">
-            <p>类型开关 (<code>type switch</code>) 比较类型而非值。可以用来发现一个接口值的
-类型。在这个例子中，变量 <code>t</code> 在每个分支中会有相应的类型。</p>
+            <p>类型开关 (<code>type switch</code>) 比较类型而非值。可以用来发现一个接口值的类型。
+在这个例子中，变量 <code>t</code> 在每个分支中会有相应的类型。</p>
 
           </td>
           <td class="code">
@@ -198,7 +187,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"time\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    i := 2\u000A    fmt.Print(\"write \", i, \" as \")\u000A    switch i {\u000A    case 1:\u000A        fmt.Println(\"one\")\u000A    case 2:\u000A        fmt.Println(\"two\")\u000A    case 3:\u000A        fmt.Println(\"three\")\u000A    }\u000A');codeLines.push('    switch time.Now().Weekday() {\u000A    case time.Saturday, time.Sunday:\u000A        fmt.Println(\"It\'s the weekend\")\u000A    default:\u000A        fmt.Println(\"It\'s a weekday\")\u000A    }\u000A');codeLines.push('    t := time.Now()\u000A    switch {\u000A    case t.Hour() \x3C 12:\u000A        fmt.Println(\"It\'s before noon\")\u000A    default:\u000A        fmt.Println(\"It\'s after noon\")\u000A    }\u000A');codeLines.push('    whatAmI := func(i interface{}) {\u000A        switch t := i.(type) {\u000A        case bool:\u000A            fmt.Println(\"I\'m a bool\")\u000A        case int:\u000A            fmt.Println(\"I\'m an int\")\u000A        default:\u000A            fmt.Printf(\"Don\'t know type %T\\n\", t)\u000A        }\u000A    }\u000A    whatAmI(true)\u000A    whatAmI(1)\u000A    whatAmI(\"hey\")\u000A}\u000A');codeLines.push('');
+      codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"time\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    i := 2\u000A    fmt.Print(\"write \", i, \" as \")\u000A    switch i {\u000A    case 1:\u000A        fmt.Println(\"one\")\u000A    case 2:\u000A        fmt.Println(\"two\")\u000A    case 3:\u000A        fmt.Println(\"three\")\u000A    }\u000A');codeLines.push('    switch time.Now().Weekday() {\u000A    case time.Saturday, time.Sunday:\u000A        fmt.Println(\"It\'s the weekend\")\u000A    default:\u000A        fmt.Println(\"It\'s a weekday\")\u000A    }\u000A');codeLines.push('    t := time.Now()\u000A    switch {\u000A    case t.Hour() \x3C 12:\u000A        fmt.Println(\"It\'s before noon\")\u000A    default:\u000A        fmt.Println(\"It\'s after noon\")\u000A    }\u000A');codeLines.push('    whatAmI := func(i interface{}) {\u000A        switch t := i.(type) {\u000A        case bool:\u000A            fmt.Println(\"I\'m a bool\")\u000A        case int:\u000A            fmt.Println(\"I\'m an int\")\u000A        default:\u000A            fmt.Printf(\"Don\'t know type %T\\n\", t)\u000A        }\u000A    }\u000A    whatAmI(true)\u000A    whatAmI(1)\u000A    whatAmI(\"hey\")\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

@@ -28,22 +28,12 @@
         
         <tr>
           <td class="docs">
-            <p><em>map</em> 是 Go 内置<a href="http://zh.wikipedia.org/wiki/关联数组">关联数据类型</a>（
-在一些其他的语言中称为<em>哈希(hash)</em> 或者<em>字典(dict)</em> ）。</p>
+            <p><em>map</em> 是 Go 内建的<a href="http://zh.wikipedia.org/wiki/关联数组">关联数据类型</a>
+（在一些其他的语言中也被称为 <em>哈希(hash)</em> 或者 <em>字典(dict)</em> ）。</p>
 
           </td>
-          <td class="code empty leading">
-            
-          
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            
-          </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/lZv-Og0vaq4"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/S68soWZ_PwU"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -76,8 +66,7 @@
         
         <tr>
           <td class="docs">
-            <p>要创建一个空 map，需要使用内建的 <code>make</code>:
-<code>make(map[key-type]val-type)</code>.</p>
+            <p>要创建一个空 map，需要使用内建函数 <code>make</code>：<code>make(map[key-type]val-type)</code>。</p>
 
           </td>
           <td class="code leading">
@@ -104,8 +93,7 @@
         
         <tr>
           <td class="docs">
-            <p>使用例如 <code>fmt.Println</code> 来打印一个 map 将会输出所有的
-键值对。</p>
+            <p>打印 map。例如，使用 <code>fmt.Println</code> 打印一个 map，会输出它所有的键值对。</p>
 
           </td>
           <td class="code leading">
@@ -118,7 +106,7 @@
         
         <tr>
           <td class="docs">
-            <p>使用 <code>name[key]</code> 来获取一个键的值</p>
+            <p>使用 <code>name[key]</code> 来获取一个键的值。</p>
 
           </td>
           <td class="code leading">
@@ -132,8 +120,7 @@
         
         <tr>
           <td class="docs">
-            <p>当对一个 map 调用内建的 <code>len</code> 时，返回的是键值对
-数目</p>
+            <p>内建函数 <code>len</code> 可以返回一个 map 的键值对数量。</p>
 
           </td>
           <td class="code leading">
@@ -146,7 +133,7 @@
         
         <tr>
           <td class="docs">
-            <p>内建的 <code>delete</code> 可以从一个 map 中移除键值对</p>
+            <p>内建函数 <code>delete</code> 可以从一个 map 中移除键值对。</p>
 
           </td>
           <td class="code leading">
@@ -160,10 +147,9 @@
         
         <tr>
           <td class="docs">
-            <p>当从一个 map 中取值时，可选的第二返回值指示这个键
-是否在这个 map 中。这可以用来消除键不存在和键有零值，
-像 <code>0</code> 或者 <code>&quot;&quot;</code> 而产生的歧义。这里我们不需要值，所以
-用_空白标识符(blank identifier)_忽略。</p>
+            <p>当从一个 map 中取值时，还有可以选择是否接收的第二个返回值，该值表明了 map 中是否存在这个键。
+这可以用来消除 <code>键不存在</code> 和 <code>键的值为零值</code> 产生的歧义，
+例如 <code>0</code> 和 <code>&quot;&quot;</code>。这里我们不需要值，所以用 <em>空白标识符(blank identifier)</em> _ 将其忽略。</p>
 
           </td>
           <td class="code leading">
@@ -177,8 +163,7 @@
         
         <tr>
           <td class="docs">
-            <p>你也可以通过这个语法在同一行声明和初始化一个新的
-map。</p>
+            <p>你也可以通过右边的语法在一行代码中声明并初始化一个新的 map。</p>
 
           </td>
           <td class="code">
@@ -197,8 +182,8 @@ map。</p>
         
         <tr>
           <td class="docs">
-            <p>注意一个 map 在使用 <code>fmt.Println</code> 打印的时候，是以 <code>map[k:v k:v]</code>
-的格式输出的。</p>
+            <p>注意，使用 <code>fmt.Println</code> 打印一个 map 的时候，
+是以 <code>map[k:v k:v]</code> 的格式输出的。</p>
 
           </td>
           <td class="code">
@@ -228,7 +213,7 @@ map。</p>
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    m := make(map[string]int)\u000A');codeLines.push('    m[\"k1\"] = 7\u000A    m[\"k2\"] = 13\u000A');codeLines.push('    fmt.Println(\"map:\", m)\u000A');codeLines.push('    v1 := m[\"k1\"]\u000A    fmt.Println(\"v1: \", v1)\u000A');codeLines.push('    fmt.Println(\"len:\", len(m))\u000A');codeLines.push('    delete(m, \"k2\")\u000A    fmt.Println(\"map:\", m)\u000A');codeLines.push('    _, prs := m[\"k2\"]\u000A    fmt.Println(\"prs:\", prs)\u000A');codeLines.push('    n := map[string]int{\"foo\": 1, \"bar\": 2}\u000A    fmt.Println(\"map:\", n)\u000A}\u000A');codeLines.push('');
+      codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    m := make(map[string]int)\u000A');codeLines.push('    m[\"k1\"] = 7\u000A    m[\"k2\"] = 13\u000A');codeLines.push('    fmt.Println(\"map:\", m)\u000A');codeLines.push('    v1 := m[\"k1\"]\u000A    fmt.Println(\"v1: \", v1)\u000A');codeLines.push('    fmt.Println(\"len:\", len(m))\u000A');codeLines.push('    delete(m, \"k2\")\u000A    fmt.Println(\"map:\", m)\u000A');codeLines.push('    _, prs := m[\"k2\"]\u000A    fmt.Println(\"prs:\", prs)\u000A');codeLines.push('    n := map[string]int{\"foo\": 1, \"bar\": 2}\u000A    fmt.Println(\"map:\", n)\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>
