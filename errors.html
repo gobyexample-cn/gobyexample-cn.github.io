@@ -29,10 +29,9 @@
         <tr>
           <td class="docs">
             <p>符合 Go 语言习惯的做法是使用一个独立、明确的返回值来传递错误信息。
-这与使用异常(exception)的 Java 和 Ruby
-以及在 C 语言中有时用到的重载(overloaded)的单返回/错误值有着明显的不同。
-Go 语言的处理方式能清楚的知道哪个函数
-返回了错误，并能像调用那些没有出错的函数一样调用。</p>
+这与 Java、Ruby 使用的异常（exception）
+以及在 C 语言中有时用到的重载 (overloaded) 的单返回/错误值有着明显的不同。
+Go 语言的处理方式能清楚的知道哪个函数返回了错误，并使用跟其他（无异常处理的）语言类似的方式来处理错误。</p>
 
           </td>
           <td class="code empty leading">
@@ -46,7 +45,7 @@ Go 语言的处理方式能清楚的知道哪个函数
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/wV-mnMog9Ly"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/6XCbYGWN6b1"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -68,8 +67,7 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p>按照惯例，错误通常是最后一个返回值并且是 <code>error</code> 类
-型，一个内建的接口。</p>
+            <p>按照惯例，错误通常是最后一个返回值并且是 <code>error</code> 类型，它是一个内建的接口。</p>
 
           </td>
           <td class="code leading">
@@ -83,8 +81,7 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p><code>errors.New</code> 构造一个使用给定的错误信息的基本
-<code>error</code> 值。</p>
+            <p><code>errors.New</code> 使用给定的错误信息构造一个基本的 <code>error</code> 值。</p>
 
           </td>
           <td class="code leading">
@@ -123,7 +120,7 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p>通过实现 <code>Error</code> 方法来自定义 <code>error</code> 类型是可以的。
+            <p>你还可以通过实现 <code>Error()</code> 方法来自定义 <code>error</code> 类型。
 这里使用自定义错误类型来表示上面例子中的参数错误。</p>
 
           </td>
@@ -167,9 +164,8 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p>在这个例子中，我们使用 <code>&amp;argError</code> 语法来建立一个
-新的结构体，并提供了 <code>arg</code> 和 <code>prob</code> 这两个字段
-的值。</p>
+            <p>在这个例子中，我们使用 <code>&amp;argError</code> 语法来建立一个新的结构体，
+并提供了 <code>arg</code> 和 <code>prob</code> 两个字段的值。</p>
 
           </td>
           <td class="code leading">
@@ -197,8 +193,8 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p>下面的两个循环测试了各个返回错误的函数。注意在 <code>if</code>
-行内的错误检查代码，在 Go 中是一个普遍的用法。</p>
+            <p>下面的两个循环测试了每一个会返回错误的函数。
+注意，在 <code>if</code> 的同一行进行错误检查，是 Go 代码中的一种常见用法。</p>
 
           </td>
           <td class="code leading">
@@ -224,8 +220,8 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p>你如果想在程序中使用一个自定义错误类型中的数据，你
-需要通过类型断言来得到这个错误类型的实例。</p>
+            <p>如果你想在程序中使用自定义错误类型的数据，
+你需要通过类型断言来得到这个自定义错误类型的实例。</p>
 
           </td>
           <td class="code">
@@ -265,8 +261,8 @@ Go 语言的处理方式能清楚的知道哪个函数
         
         <tr>
           <td class="docs">
-            <p>到 Go 官方博客去看这篇<a href="http://blog.golang.org/2011/07/error-handling-and-go.html">很棒的文章</a>
-获取更多关于错误处理的信息。</p>
+            <p>到 Go 官方博客去看这篇<a href="http://blog.golang.org/2011/07/error-handling-and-go.html">很棒的文章</a>，
+以获取更多关于错误处理的信息。</p>
 
           </td>
           <td class="code empty">
