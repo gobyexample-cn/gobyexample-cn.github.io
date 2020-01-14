@@ -28,9 +28,9 @@
         
         <tr>
           <td class="docs">
-            <p>我们常常需要在后面一个时刻运行 Go 代码，或者在某段时间
-间隔内重复运行。Go 的内置 <em>定时器</em> 和 <em>打点器</em> 特性让这
-些很容易实现。我们将先学习定时器，然后再学习<a href="../tickers/">打点器</a>。</p>
+            <p>我们经常需要在未来的某个时间点运行 Go 代码，或者每隔一定时间重复运行代码。
+Go 内置的 <em>定时器</em> 和 <em>打点器</em> 特性让这些变得很简单。
+我们会先学习定时器，然后再学习<a href="tickers">打点器</a>。</p>
 
           </td>
           <td class="code empty leading">
@@ -44,7 +44,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/yfz8G6a2dp"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/b6QU6zxON-O"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -57,8 +57,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;time&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -78,14 +80,14 @@
         
         <tr>
           <td class="docs">
-            <p>定时器表示在未来某一时刻的独立事件。你告诉定时器
-需要等待的时间，然后它将提供一个用于通知的通道。
+            <p>定时器表示在未来某一时刻的独立事件。
+你告诉定时器需要等待的时间，然后它将提供一个用于通知的通道。
 这里的定时器将等待 2 秒。</p>
 
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre>    <span class="nx">timer1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">NewTimer</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+          <div class="highlight"><pre>    <span class="nx">timer1</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">NewTimer</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
 </pre></div>
 
           </td>
@@ -93,14 +95,14 @@
         
         <tr>
           <td class="docs">
-            <p><code>&lt;-timer1.C</code> 直到这个定时器的通道 <code>C</code> 明确的发送了
-定时器失效的值之前，将一直阻塞。</p>
+            <p><code>&lt;-timer1.C</code> 会一直阻塞，
+直到定时器的通道 <code>C</code> 明确的发送了定时器失效的值。</p>
 
           </td>
           <td class="code leading">
             
           <div class="highlight"><pre>    <span class="o">&lt;-</span><span class="nx">timer1</span><span class="p">.</span><span class="nx">C</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Timer 1 expired&quot;</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Timer 1 fired&quot;</span><span class="p">)</span>
 </pre></div>
 
           </td>
@@ -108,22 +110,35 @@
         
         <tr>
           <td class="docs">
-            <p>如果你需要的仅仅是单纯的等待，你需要使用 <code>time.Sleep</code>。
-定时器是有用原因之一就是你可以在定时器失效之前，取消这个
-定时器。这是一个例子</p>
+            <p>如果你需要的仅仅是单纯的等待，使用 <code>time.Sleep</code> 就够了。
+使用定时器的原因之一就是，你可以在定时器触发之前将其取消。
+例如这样。</p>
 
           </td>
-          <td class="code">
+          <td class="code leading">
             
           <div class="highlight"><pre>    <span class="nx">timer2</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">NewTimer</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
     <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
         <span class="o">&lt;-</span><span class="nx">timer2</span><span class="p">.</span><span class="nx">C</span>
-        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Timer 2 expired&quot;</span><span class="p">)</span>
+        <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Timer 2 fired&quot;</span><span class="p">)</span>
     <span class="p">}()</span>
     <span class="nx">stop2</span> <span class="o">:=</span> <span class="nx">timer2</span><span class="p">.</span><span class="nx">Stop</span><span class="p">()</span>
     <span class="k">if</span> <span class="nx">stop2</span> <span class="p">{</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Timer 2 stopped&quot;</span><span class="p">)</span>
     <span class="p">}</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>给 <code>timer2</code> 足够的时间来触发它，以证明它实际上已经停止了。</p>
+
+          </td>
+          <td class="code">
+            
+          <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
 
@@ -136,14 +151,14 @@
         
         <tr>
           <td class="docs">
-            <p>第一个定时器将在程序开始后 ~2s 失效，但是第二个在它
-没失效之前就停止了。</p>
+            <p>第一个定时器将在程序开始后大约 2s 触发，
+但是第二个定时器还未触发就停止了。</p>
 
           </td>
           <td class="code">
             
           <div class="highlight"><pre><span class="gp">$</span> go run timers.go
-<span class="go">Timer 1 expired</span>
+<span class="go">Timer 1 fired</span>
 <span class="go">Timer 2 stopped</span>
 </pre></div>
 
@@ -163,7 +178,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"time\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    timer1 := time.NewTimer(time.Second * 2)\u000A');codeLines.push('    \x3C-timer1.C\u000A    fmt.Println(\"Timer 1 expired\")\u000A');codeLines.push('    timer2 := time.NewTimer(time.Second)\u000A    go func() {\u000A        \x3C-timer2.C\u000A        fmt.Println(\"Timer 2 expired\")\u000A    }()\u000A    stop2 := timer2.Stop()\u000A    if stop2 {\u000A        fmt.Println(\"Timer 2 stopped\")\u000A    }\u000A}\u000A');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    timer1 := time.NewTimer(2 * time.Second)\u000A');codeLines.push('    \x3C-timer1.C\u000A    fmt.Println(\"Timer 1 fired\")\u000A');codeLines.push('    timer2 := time.NewTimer(time.Second)\u000A    go func() {\u000A        \x3C-timer2.C\u000A        fmt.Println(\"Timer 2 fired\")\u000A    }()\u000A    stop2 := timer2.Stop()\u000A    if stop2 {\u000A        fmt.Println(\"Timer 2 stopped\")\u000A    }\u000A');codeLines.push('    time.Sleep(2 * time.Second)\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

@@ -28,8 +28,8 @@
         
         <tr>
           <td class="docs">
-            <p>Go 的 <code>sort</code> 包实现了内置和用户自定义数据类型的排序
-功能。我们首先关注内置数据类型的排序。</p>
+            <p>Go 的 <code>sort</code> 包实现了内建及用户自定义数据类型的排序功能。
+我们先来看看内建数据类型的排序。</p>
 
           </td>
           <td class="code empty leading">
@@ -43,7 +43,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/3jlywSR6P86"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/R3cwByvtmp3"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -56,8 +56,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;sort&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;sort&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -77,9 +79,9 @@
         
         <tr>
           <td class="docs">
-            <p>排序方法是针对内置数据类型的；这里是一个字符串的例子。
-注意排序是原地更新的，所以他会改变给定的序列并且不返回
-一个新值。</p>
+            <p>排序方法是针对内置数据类型的；
+这是一个字符串排序的例子。
+注意，它是原地排序的，所以他会直接改变给定的切片，而不是返回一个新切片。</p>
 
           </td>
           <td class="code leading">
@@ -109,8 +111,7 @@
         
         <tr>
           <td class="docs">
-            <p>我们也可以使用 <code>sort</code> 来检查一个序列是不是已经
-是排好序的。</p>
+            <p>我们也可以使用 <code>sort</code> 来检查一个切片是否为有序的。</p>
 
           </td>
           <td class="code">
@@ -129,8 +130,8 @@
         
         <tr>
           <td class="docs">
-            <p>运行程序，打印排序好的字符串和整型序列以及我们 <code>AreSorted</code>
-测试的结果 <code>true</code>。</p>
+            <p>运行程序，打印排序好的字符串和整型切片，
+以及 <code>AreSorted</code> 的测试结果：<code>true</code>。</p>
 
           </td>
           <td class="code">
@@ -157,7 +158,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"sort\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    strs := []string{\"c\", \"a\", \"b\"}\u000A    sort.Strings(strs)\u000A    fmt.Println(\"Strings:\", strs)\u000A');codeLines.push('    ints := []int{7, 2, 4}\u000A    sort.Ints(ints)\u000A    fmt.Println(\"Ints:   \", ints)\u000A');codeLines.push('    s := sort.IntsAreSorted(ints)\u000A    fmt.Println(\"Sorted: \", s)\u000A}\u000A');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"sort\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    strs := []string{\"c\", \"a\", \"b\"}\u000A    sort.Strings(strs)\u000A    fmt.Println(\"Strings:\", strs)\u000A');codeLines.push('    ints := []int{7, 2, 4}\u000A    sort.Ints(ints)\u000A    fmt.Println(\"Ints:   \", ints)\u000A');codeLines.push('    s := sort.IntsAreSorted(ints)\u000A    fmt.Println(\"Sorted: \", s)\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

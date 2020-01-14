@@ -28,7 +28,7 @@
         
         <tr>
           <td class="docs">
-            <p><em>Go 协程(goroutine)</em> 在执行上来说是轻量级的线程。</p>
+            <p><em>协程(goroutine)</em> 是轻量级的执行线程。</p>
 
           </td>
           <td class="code empty leading">
@@ -42,7 +42,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/pkHnSzjnPxc"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/8CNjga5cr6F"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -55,7 +55,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -91,7 +94,8 @@
         
         <tr>
           <td class="docs">
-            <p>假设我们有一个函数叫做 <code>f(s)</code>。一般会这样同步(synchronously)调用</p>
+            <p>假设我们有一个函数叫做 <code>f(s)</code>。
+我们一般会这样 <code>同步地</code> 调用它</p>
 
           </td>
           <td class="code leading">
@@ -104,8 +108,8 @@
         
         <tr>
           <td class="docs">
-            <p>使用 <code>go f(s)</code> 在一个 Go 协程中调用这个函数。
-这个新的 Go 协程将会并发(concurrently)执行这个函数。</p>
+            <p>使用 <code>go f(s)</code> 在一个协程中调用这个函数。
+这个新的 Go 协程将会 <code>并发地</code> 执行这个函数。</p>
 
           </td>
           <td class="code leading">
@@ -118,7 +122,7 @@
         
         <tr>
           <td class="docs">
-            <p>你也可以为匿名函数启动一个 Go 协程。</p>
+            <p>你也可以为匿名函数启动一个协程。</p>
 
           </td>
           <td class="code leading">
@@ -133,14 +137,13 @@
         
         <tr>
           <td class="docs">
-            <p>现在这两个 Go 协程在独立的 Go 协程中异步(asynchronously)运行，所以
-程序直接运行到这一行。这里的 <code>Scanln</code> 代码需要我们
-在程序退出前按下任意键结束。</p>
+            <p>现在两个协程在独立的协程中 <code>异步地</code> 运行，
+然后等待两个协程完成（更好的方法是使用 <a href="waitgroups">WaitGroup</a>）。</p>
 
           </td>
           <td class="code">
             
-          <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Scanln</span><span class="p">()</span>
+          <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;done&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -154,9 +157,8 @@
         
         <tr>
           <td class="docs">
-            <p>当我们运行这个程序时，将首先看到阻塞式调用的输出，然后是
-两个 Go 协程的交替输出。这种交替的情况表示 Go 运行时是以
-并发的方式运行协程的。</p>
+            <p>当我们运行这个程序时，首先会看到阻塞式调用的输出，然后是两个协程的交替输出。
+这种交替的情况表示 Go runtime 是以并发的方式运行协程的。</p>
 
           </td>
           <td class="code leading">
@@ -169,7 +171,6 @@
 <span class="go">going</span>
 <span class="go">goroutine : 1</span>
 <span class="go">goroutine : 2</span>
-<span class="go">&lt;enter&gt;</span>
 <span class="go">done</span>
 </pre></div>
 
@@ -178,8 +179,7 @@
         
         <tr>
           <td class="docs">
-            <p>接下来我们将学习在并发的 Go 程序中的 Go 协程的辅助
-特性：通道(channels)。</p>
+            <p>接下来我们将学习协程的辅助特性：通道（channels）。</p>
 
           </td>
           <td class="code empty">
@@ -201,7 +201,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000A');codeLines.push('func f(from string) {\u000A    for i := 0; i \x3C 3; i++ {\u000A        fmt.Println(from, \":\", i)\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    f(\"direct\")\u000A');codeLines.push('    go f(\"goroutine\")\u000A');codeLines.push('    go func(msg string) {\u000A        fmt.Println(msg)\u000A    }(\"going\")\u000A');codeLines.push('    fmt.Scanln()\u000A    fmt.Println(\"done\")\u000A}\u000A');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func f(from string) {\u000A    for i := 0; i \x3C 3; i++ {\u000A        fmt.Println(from, \":\", i)\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    f(\"direct\")\u000A');codeLines.push('    go f(\"goroutine\")\u000A');codeLines.push('    go func(msg string) {\u000A        fmt.Println(msg)\u000A    }(\"going\")\u000A');codeLines.push('    time.Sleep(time.Second)\u000A    fmt.Println(\"done\")\u000A}\u000A');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

@@ -28,9 +28,9 @@
         
         <tr>
           <td class="docs">
-            <p><a href="http://en.wikipedia.org/wiki/Rate_limiting"><em>速率限制(英)</em></a> 是
-一个重要的控制服务资源利用和质量的途径。Go 通过 Go 协程、通
-道和<a href="../tickers/">打点器</a>优美的支持了速率限制。</p>
+            <p><em><a href="http://en.wikipedia.org/wiki/Rate_limiting">速率限制</a></em>
+是控制服务资源利用和质量的重要机制。
+基于协程、通道和<a href="tickers">打点器</a>，Go 优雅的支持速率限制。</p>
 
           </td>
           <td class="code empty leading">
@@ -44,7 +44,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/wL9JZ1YuKD8"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/J02ZVgmF75x"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -57,8 +57,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;time&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -78,8 +80,8 @@
         
         <tr>
           <td class="docs">
-            <p>首先我们将看一下基本的速率限制。假设我们想限制我们
-接收请求的处理，我们将这些请求发送给一个相同的通道。</p>
+            <p>首先，我们将看一个基本的速率限制。
+假设我们想限制对收到请求的处理，我们可以通过一个渠道处理这些请求。</p>
 
           </td>
           <td class="code leading">
@@ -96,13 +98,13 @@
         
         <tr>
           <td class="docs">
-            <p>这个 <code>limiter</code> 通道将每 200ms 接收一个值。这个是
-速率限制任务中的管理器。</p>
+            <p><code>limiter</code> 通道每 200ms 接收一个值。
+这是我们任务速率限制的调度器。</p>
 
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre>    <span class="nx">limiter</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Tick</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span> <span class="o">*</span> <span class="mi">200</span><span class="p">)</span>
+          <div class="highlight"><pre>    <span class="nx">limiter</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Tick</span><span class="p">(</span><span class="mi">200</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
 </pre></div>
 
           </td>
@@ -110,8 +112,8 @@
         
         <tr>
           <td class="docs">
-            <p>通过在每次请求前阻塞 <code>limiter</code> 通道的一个接收，我们限制
-自己每 200ms 执行一次请求。</p>
+            <p>通过在每次请求前阻塞 <code>limiter</code> 通道的一个接收，
+可以将频率限制为，每 200ms 执行一次请求。</p>
 
           </td>
           <td class="code leading">
@@ -127,9 +129,9 @@
         
         <tr>
           <td class="docs">
-            <p>有时候我们想临时进行速率限制，并且不影响整体的速率控制，
-我们可以通过<a href="channel-buffering.html">通道缓冲</a>来实现。
-这个 <code>burstyLimiter</code> 通道用来进行 3 次临时的脉冲型速率限制。</p>
+            <p>有时候我们可能希望在速率限制方案中允许短暂的并发请求，并同时保留总体速率限制。
+我们可以通过缓冲通道来完成此任务。
+<code>burstyLimiter</code> 通道允许最多 3 个爆发（bursts）事件。</p>
 
           </td>
           <td class="code leading">
@@ -142,7 +144,7 @@
         
         <tr>
           <td class="docs">
-            <p>想将通道填充需要临时改变3次的值，做好准备。</p>
+            <p>填充通道，表示允许的爆发（bursts）。</p>
 
           </td>
           <td class="code leading">
@@ -157,14 +159,14 @@
         
         <tr>
           <td class="docs">
-            <p>每 200 ms 我们将添加一个新的值到 <code>burstyLimiter</code>中，
+            <p>每 200ms 我们将尝试添加一个新的值到 <code>burstyLimiter</code>中，
 直到达到 3 个的限制。</p>
 
           </td>
           <td class="code leading">
             
           <div class="highlight"><pre>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="nx">t</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Tick</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span> <span class="o">*</span> <span class="mi">200</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="nx">t</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Tick</span><span class="p">(</span><span class="mi">200</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span> <span class="p">{</span>
             <span class="nx">burstyLimiter</span> <span class="o">&lt;-</span> <span class="nx">t</span>
         <span class="p">}</span>
     <span class="p">}()</span>
@@ -175,8 +177,8 @@
         
         <tr>
           <td class="docs">
-            <p>现在模拟超过 5 个的接入请求。它们中刚开始的 3 个将
-由于受 <code>burstyLimiter</code> 的“脉冲”影响。</p>
+            <p>现在，模拟另外 5 个传入请求。
+受益于 <code>burstyLimiter</code> 的爆发（bursts）能力，前 3 个请求可以快速完成。</p>
 
           </td>
           <td class="code">
@@ -220,8 +222,8 @@
         
         <tr>
           <td class="docs">
-            <p>第二批请求，我们直接连续处理了 3 次，这是由于这个“脉冲”
-速率控制，然后大约每 200ms 处理其余的 2 个。</p>
+            <p>第二批请求，由于爆发（burstable）速率控制，我们直接连续处理了 3 个请求，
+然后以大约每 200ms 一次的速度，处理了剩余的 2 个请求。</p>
 
           </td>
           <td class="code">
@@ -249,7 +251,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"time\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    requests := make(chan int, 5)\u000A    for i := 1; i \x3C= 5; i++ {\u000A        requests \x3C- i\u000A    }\u000A    close(requests)\u000A');codeLines.push('    limiter := time.Tick(time.Millisecond * 200)\u000A');codeLines.push('    for req := range requests {\u000A        \x3C-limiter\u000A        fmt.Println(\"request\", req, time.Now())\u000A    }\u000A');codeLines.push('    burstyLimiter := make(chan time.Time, 3)\u000A');codeLines.push('    for i := 0; i \x3C 3; i++ {\u000A        burstyLimiter \x3C- time.Now()\u000A    }\u000A');codeLines.push('    go func() {\u000A        for t := range time.Tick(time.Millisecond * 200) {\u000A            burstyLimiter \x3C- t\u000A        }\u000A    }()\u000A');codeLines.push('    burstyRequests := make(chan int, 5)\u000A    for i := 1; i \x3C= 5; i++ {\u000A        burstyRequests \x3C- i\u000A    }\u000A    close(burstyRequests)\u000A    for req := range burstyRequests {\u000A        \x3C-burstyLimiter\u000A        fmt.Println(\"request\", req, time.Now())\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    requests := make(chan int, 5)\u000A    for i := 1; i \x3C= 5; i++ {\u000A        requests \x3C- i\u000A    }\u000A    close(requests)\u000A');codeLines.push('    limiter := time.Tick(200 * time.Millisecond)\u000A');codeLines.push('    for req := range requests {\u000A        \x3C-limiter\u000A        fmt.Println(\"request\", req, time.Now())\u000A    }\u000A');codeLines.push('    burstyLimiter := make(chan time.Time, 3)\u000A');codeLines.push('    for i := 0; i \x3C 3; i++ {\u000A        burstyLimiter \x3C- time.Now()\u000A    }\u000A');codeLines.push('    go func() {\u000A        for t := range time.Tick(200 * time.Millisecond) {\u000A            burstyLimiter \x3C- t\u000A        }\u000A    }()\u000A');codeLines.push('    burstyRequests := make(chan int, 5)\u000A    for i := 1; i \x3C= 5; i++ {\u000A        burstyRequests \x3C- i\u000A    }\u000A    close(burstyRequests)\u000A    for req := range burstyRequests {\u000A        \x3C-burstyLimiter\u000A        fmt.Println(\"request\", req, time.Now())\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

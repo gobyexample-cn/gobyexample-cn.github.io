@@ -28,10 +28,9 @@
         
         <tr>
           <td class="docs">
-            <p><a href="../timers/">定时器</a> 是当你想要在未来某一刻执行一次时
-使用的 - <em>打点器</em> 则是当你想要在固定的时间间隔重复执行
-准备的。这里是一个打点器的例子，它将定时的执行，直到我
-们将它停止。</p>
+            <p><a href="timers">定时器</a> 是当你想要在未来某一刻执行一次时使用的
+- <em>打点器</em> 则是为你想要以固定的时间间隔重复执行而准备的。
+这里是一个打点器的例子，它将定时的执行，直到我们将它停止。</p>
 
           </td>
           <td class="code empty leading">
@@ -45,7 +44,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/NwaUf2VrMK"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/tECjr_Chmrc"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -58,8 +57,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;time&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -79,17 +80,33 @@
         
         <tr>
           <td class="docs">
-            <p>打点器和定时器的机制有点相似：一个通道用来发送数据。
-这里我们在这个通道上使用内置的 <code>range</code> 来迭代值每隔
-500ms 发送一次的值。</p>
+            <p>打点器和定时器的机制有点相似：使用一个通道来发送数据。
+这里我们使用通道内建的 <code>select</code>，等待每 500ms 到达一次的值。</p>
 
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre>    <span class="nx">ticker</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">NewTicker</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span> <span class="o">*</span> <span class="mi">500</span><span class="p">)</span>
-    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="k">for</span> <span class="nx">t</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">ticker</span><span class="p">.</span><span class="nx">C</span> <span class="p">{</span>
-            <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Tick at&quot;</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span>
+          <div class="highlight"><pre>    <span class="nx">ticker</span> <span class="o">:=</span> <span class="nx">time</span><span class="p">.</span><span class="nx">NewTicker</span><span class="p">(</span><span class="mi">500</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
+    <span class="nx">done</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">bool</span><span class="p">)</span>
+</pre></div>
+
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <div class="highlight"><pre>    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="p">{</span>
+            <span class="k">select</span> <span class="p">{</span>
+            <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">done</span><span class="p">:</span>
+                <span class="k">return</span>
+            <span class="k">case</span> <span class="nx">t</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">ticker</span><span class="p">.</span><span class="nx">C</span><span class="p">:</span>
+                <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Tick at&quot;</span><span class="p">,</span> <span class="nx">t</span><span class="p">)</span>
+            <span class="p">}</span>
         <span class="p">}</span>
     <span class="p">}()</span>
 </pre></div>
@@ -99,15 +116,16 @@
         
         <tr>
           <td class="docs">
-            <p>打点器可以和定时器一样被停止。一旦一个打点停止了，
-将不能再从它的通道中接收到值。我们将在运行后 1600ms
-停止这个打点器。</p>
+            <p>打点器可以和定时器一样被停止。
+打点器一旦停止，将不能再从它的通道中接收到值。
+我们将在运行 1600ms 后停止这个打点器。</p>
 
           </td>
           <td class="code">
             
-          <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span> <span class="o">*</span> <span class="mi">1600</span><span class="p">)</span>
+          <div class="highlight"><pre>    <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">1600</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
     <span class="nx">ticker</span><span class="p">.</span><span class="nx">Stop</span><span class="p">()</span>
+    <span class="nx">done</span> <span class="o">&lt;-</span> <span class="kc">true</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;Ticker stopped&quot;</span><span class="p">)</span>
 <span class="p">}</span>
 </pre></div>
@@ -121,7 +139,7 @@
         
         <tr>
           <td class="docs">
-            <p>当我们运行这个程序时，这个打点器会在我们停止它前打点3次。</p>
+            <p>当我们运行这个程序时，打点器会在我们停止它前打点 3 次。</p>
 
           </td>
           <td class="code">
@@ -149,7 +167,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"time\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    ticker := time.NewTicker(time.Millisecond * 500)\u000A    go func() {\u000A        for t := range ticker.C {\u000A            fmt.Println(\"Tick at\", t)\u000A        }\u000A    }()\u000A');codeLines.push('    time.Sleep(time.Millisecond * 1600)\u000A    ticker.Stop()\u000A    fmt.Println(\"Ticker stopped\")\u000A}\u000A');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    ticker := time.NewTicker(500 * time.Millisecond)\u000A    done := make(chan bool)\u000A');codeLines.push('    go func() {\u000A        for {\u000A            select {\u000A            case \x3C-done:\u000A                return\u000A            case t := \x3C-ticker.C:\u000A                fmt.Println(\"Tick at\", t)\u000A            }\u000A        }\u000A    }()\u000A');codeLines.push('    time.Sleep(1600 * time.Millisecond)\u000A    ticker.Stop()\u000A    done \x3C- true\u000A    fmt.Println(\"Ticker stopped\")\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

@@ -28,8 +28,8 @@
         
         <tr>
           <td class="docs">
-            <p><em>关闭</em> 一个通道意味着不能再向这个通道发送值了。这个特性可以
-用来给这个通道的接收方传达工作已经完成的信息。</p>
+            <p><em>关闭</em> 一个通道意味着不能再向这个通道发送值了。
+该特性可以向通道的接收方传达工作已经完成的信息。</p>
 
           </td>
           <td class="code empty leading">
@@ -43,7 +43,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/Xv8Ob9Q_oK"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/dfMXpTUDw9H"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -64,9 +64,9 @@
         
         <tr>
           <td class="docs">
-            <p>在这个例子中，我们将使用一个 <code>jobs</code> 通道来传递 <code>main()</code> 中 Go
-协程任务执行的结束信息到一个工作 Go 协程中。当我们没有多余的
-任务给这个工作 Go 协程时，我们将 <code>close</code> 这个 <code>jobs</code> 通道。</p>
+            <p>在这个例子中，我们将使用一个 <code>jobs</code> 通道，将工作内容，
+从 <code>main()</code> 协程传递到一个工作协程中。
+当我们没有更多的任务传递给工作协程时，我们将 <code>close</code> 这个 <code>jobs</code> 通道。</p>
 
           </td>
           <td class="code leading">
@@ -81,11 +81,10 @@
         
         <tr>
           <td class="docs">
-            <p>这是工作 Go 协程。使用 <code>j, more := &lt;- jobs</code> 循环的从
-<code>jobs</code> 接收数据。在接收的这个特殊的二值形式的值中，
-如果 <code>jobs</code> 已经关闭了，并且通道中所有的值都已经接收
-完毕，那么 <code>more</code> 的值将是 <code>false</code>。当我们完成所有
-的任务时，将使用这个特性通过 <code>done</code> 通道去进行通知。</p>
+            <p>这是工作协程。使用 <code>j, more := &lt;- jobs</code> 循环的从 <code>jobs</code> 接收数据。
+根据接收的第二个值，如果 <code>jobs</code> 已经关闭了，
+并且通道中所有的值都已经接收完毕，那么 <code>more</code> 的值将是 <code>false</code>。
+当我们完成所有的任务时，会使用这个特性通过 <code>done</code> 通道通知 main 协程。</p>
 
           </td>
           <td class="code leading">
@@ -109,8 +108,7 @@
         
         <tr>
           <td class="docs">
-            <p>这里使用 <code>jobs</code> 发送 3 个任务到工作函数中，然后
-关闭 <code>jobs</code>。</p>
+            <p>使用 <code>jobs</code> 发送 3 个任务到工作协程中，然后关闭 <code>jobs</code>。</p>
 
           </td>
           <td class="code leading">
@@ -128,8 +126,7 @@
         
         <tr>
           <td class="docs">
-            <p>我们使用前面学到的<a href="../channel-synchronization/">通道同步</a>
-方法等待任务结束。</p>
+            <p>使用前面学到的<a href="channel-synchronization">通道同步</a>方法等待任务结束。</p>
 
           </td>
           <td class="code">
@@ -167,7 +164,7 @@
         
         <tr>
           <td class="docs">
-            <p>通过关闭通道的学习，也让下面学习通道遍历水到渠成。</p>
+            <p>根据 <code>关闭通道</code> 的思想，可以引出我们的下一个示例：遍历通道。</p>
 
           </td>
           <td class="code empty">

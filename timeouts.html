@@ -28,9 +28,9 @@
         
         <tr>
           <td class="docs">
-            <p><em>超时</em> 对于一个连接外部资源，或者其它一些需要花费执行时间
-的操作的程序而言是很重要的。得益于通道和 <code>select</code>，在 Go
-中实现超时操作是简洁而优雅的。</p>
+            <p><em>超时</em> 对于一个需要连接外部资源，
+或者有耗时较长的操作的程序而言是很重要的。
+得益于通道和 <code>select</code>，在 Go 中实现超时操作是简洁而优雅的。</p>
 
           </td>
           <td class="code empty leading">
@@ -44,7 +44,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/Q2Xs5EZLwr"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/jtL21Ki_X3b"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -57,8 +57,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;time&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -78,15 +80,15 @@
         
         <tr>
           <td class="docs">
-            <p>在我们的例子中，假如我们执行一个外部调用，并在 2 秒后
-通过通道 <code>c1</code> 返回它的执行结果。</p>
+            <p>在这个例子中，假如我们执行一个外部调用，
+并在 2 秒后使用通道 <code>c1</code> 返回它的执行结果。</p>
 
           </td>
           <td class="code leading">
             
           <div class="highlight"><pre>    <span class="nx">c1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
         <span class="nx">c1</span> <span class="o">&lt;-</span> <span class="s">&quot;result 1&quot;</span>
     <span class="p">}()</span>
 </pre></div>
@@ -97,10 +99,9 @@
         <tr>
           <td class="docs">
             <p>这里是使用 <code>select</code> 实现一个超时操作。
-<code>res := &lt;- c1</code> 等待结果，<code>&lt;-Time.After</code> 等待超时
-时间 1 秒后发送的值。由于 <code>select</code> 默认处理第一个
-已准备好的接收操作，如果这个操作超过了允许的 1 秒
-的话，将会执行超时 case。</p>
+<code>res := &lt;- c1</code> 等待结果，<code>&lt;-Time.After</code> 等待超时（1秒钟）以后发送的值。
+由于 <code>select</code> 默认处理第一个已准备好的接收操作，
+因此如果操作耗时超过了允许的 1 秒的话，将会执行超时 case。</p>
 
           </td>
           <td class="code leading">
@@ -108,7 +109,7 @@
           <div class="highlight"><pre>    <span class="k">select</span> <span class="p">{</span>
     <span class="k">case</span> <span class="nx">res</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">c1</span><span class="p">:</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
-    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">1</span><span class="p">):</span>
+    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="mi">1</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">):</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;timeout 1&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 </pre></div>
@@ -118,37 +119,26 @@
         
         <tr>
           <td class="docs">
-            <p>如果我允许一个长一点的超时时间 3 秒，将会成功的从 <code>c2</code>
-接收到值，并且打印出结果。</p>
+            <p>如果我们允许一个长一点的超时时间：3 秒，
+就可以成功的从 <code>c2</code> 接收到值，并且打印出结果。</p>
 
           </td>
-          <td class="code leading">
+          <td class="code">
             
           <div class="highlight"><pre>    <span class="nx">c2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
     <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">2</span><span class="p">)</span>
+        <span class="nx">time</span><span class="p">.</span><span class="nx">Sleep</span><span class="p">(</span><span class="mi">2</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span>
         <span class="nx">c2</span> <span class="o">&lt;-</span> <span class="s">&quot;result 2&quot;</span>
     <span class="p">}()</span>
     <span class="k">select</span> <span class="p">{</span>
     <span class="k">case</span> <span class="nx">res</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">c2</span><span class="p">:</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">res</span><span class="p">)</span>
-    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span> <span class="o">*</span> <span class="mi">3</span><span class="p">):</span>
+    <span class="k">case</span> <span class="o">&lt;-</span><span class="nx">time</span><span class="p">.</span><span class="nx">After</span><span class="p">(</span><span class="mi">3</span> <span class="o">*</span> <span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">):</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="s">&quot;timeout 2&quot;</span><span class="p">)</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>todo: cancellation?</p>
-
-          </td>
-          <td class="code empty">
-            
-          
           </td>
         </tr>
         
@@ -161,26 +151,13 @@
             <p>运行这个程序，首先显示运行超时的操作，然后是成功接收的。</p>
 
           </td>
-          <td class="code leading">
+          <td class="code">
             
           <div class="highlight"><pre><span class="gp">$</span> go run timeouts.go 
 <span class="go">timeout 1</span>
 <span class="go">result 2</span>
 </pre></div>
 
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>使用这个 <code>select</code> 超时方式，需要使用通道传递结果。这对于
-一般情况是个好的方式，因为其他重要的 Go 特性是基于通道和
-<code>select</code> 的。接下来我们就要看到两个例子：timer 和 ticker。</p>
-
-          </td>
-          <td class="code empty">
-            
-          
           </td>
         </tr>
         
@@ -197,7 +174,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"time\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    c1 := make(chan string, 1)\u000A    go func() {\u000A        time.Sleep(time.Second * 2)\u000A        c1 \x3C- \"result 1\"\u000A    }()\u000A');codeLines.push('    select {\u000A    case res := \x3C-c1:\u000A        fmt.Println(res)\u000A    case \x3C-time.After(time.Second * 1):\u000A        fmt.Println(\"timeout 1\")\u000A    }\u000A');codeLines.push('    c2 := make(chan string, 1)\u000A    go func() {\u000A        time.Sleep(time.Second * 2)\u000A        c2 \x3C- \"result 2\"\u000A    }()\u000A    select {\u000A    case res := \x3C-c2:\u000A        fmt.Println(res)\u000A    case \x3C-time.After(time.Second * 3):\u000A        fmt.Println(\"timeout 2\")\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    c1 := make(chan string, 1)\u000A    go func() {\u000A        time.Sleep(2 * time.Second)\u000A        c1 \x3C- \"result 1\"\u000A    }()\u000A');codeLines.push('    select {\u000A    case res := \x3C-c1:\u000A        fmt.Println(res)\u000A    case \x3C-time.After(1 * time.Second):\u000A        fmt.Println(\"timeout 1\")\u000A    }\u000A');codeLines.push('    c2 := make(chan string, 1)\u000A    go func() {\u000A        time.Sleep(2 * time.Second)\u000A        c2 \x3C- \"result 2\"\u000A    }()\u000A    select {\u000A    case res := \x3C-c2:\u000A        fmt.Println(res)\u000A    case \x3C-time.After(3 * time.Second):\u000A        fmt.Println(\"timeout 2\")\u000A    }\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>
