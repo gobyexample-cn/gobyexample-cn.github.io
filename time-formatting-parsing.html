@@ -28,7 +28,7 @@
         
         <tr>
           <td class="docs">
-            <p>Go 支持通过基于描述模板的时间格式化和解析。</p>
+            <p>Go 支持通过基于描述模板的时间格式化与解析。</p>
 
           </td>
           <td class="code empty leading">
@@ -42,7 +42,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/U2sZmYuQIkf"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/RJqRXEC3aM8"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -55,8 +55,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;time&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;time&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -77,8 +79,8 @@
         
         <tr>
           <td class="docs">
-            <p>这里是一个基本的按照 RFC3339 进行格式化的例子，使用
-对应模式常量。</p>
+            <p>这是一个遵循 RFC3339，
+并使用对应的 <code>布局</code>（layout）常量进行格式化的基本例子。</p>
 
           </td>
           <td class="code leading">
@@ -92,7 +94,7 @@
         
         <tr>
           <td class="docs">
-            <p>时间解析使用同 <code>Format</code> 相同的形式值。</p>
+            <p>时间解析使用与 <code>Format</code> 相同的布局值。</p>
 
           </td>
           <td class="code leading">
@@ -108,11 +110,11 @@
         
         <tr>
           <td class="docs">
-            <p><code>Format</code> 和 <code>Parse</code> 使用基于例子的形式来决定日期格式，
-一般你只要使用 <code>time</code> 包中提供的模式常量就行了，但是你
-也可以实现自定义模式。模式必须使用时间 <code>Mon Jan 2 15:04:05 MST 2006</code>
-来指定给定时间/字符串的格式化/解析方式。时间一定要按照
-如下所示：2006为年，15 为小时，Monday 代表星期几，等等。</p>
+            <p><code>Format</code> 和 <code>Parse</code> 使用基于例子的布局来决定日期格式，
+一般你只要使用 <code>time</code> 包中提供的布局常量就行了，但是你也可以实现自定义布局。
+布局时间必须使用 <code>Mon Jan 2 15:04:05 MST 2006</code> 的格式，
+来指定 格式化/解析给定时间/字符串 的布局。
+时间一定要遵循：2006 为年，15 为小时，Monday 代表星期几等规则。</p>
 
           </td>
           <td class="code leading">
@@ -130,8 +132,8 @@
         
         <tr>
           <td class="docs">
-            <p>对于纯数字表示的时间，你也可以使用标准的格式化字
-符串来提出时间值的组成。</p>
+            <p>对于纯数字表示的时间（时间戳），
+您还可以将标准字符串格式与提取时间值的一部分一起使用。</p>
 
           </td>
           <td class="code leading">
@@ -146,8 +148,7 @@
         
         <tr>
           <td class="docs">
-            <p><code>Parse</code> 函数在输入的时间格式不正确时会返回一个
-错误。</p>
+            <p>当输入的时间格式不正确时，<code>Parse</code> 会返回一个解析错误。</p>
 
           </td>
           <td class="code">
@@ -198,7 +199,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"time\"\u000A');codeLines.push('func main() {\u000A    p := fmt.Println\u000A');codeLines.push('    t := time.Now()\u000A    p(t.Format(time.RFC3339))\u000A');codeLines.push('    t1, e := time.Parse(\u000A        time.RFC3339,\u000A        \"2012-11-01T22:08:41+00:00\")\u000A    p(t1)\u000A');codeLines.push('    p(t.Format(\"3:04PM\"))\u000A    p(t.Format(\"Mon Jan _2 15:04:05 2006\"))\u000A    p(t.Format(\"2006-01-02T15:04:05.999999-07:00\"))\u000A    form := \"3 04 PM\"\u000A    t2, e := time.Parse(form, \"8 41 PM\")\u000A    p(t2)\u000A');codeLines.push('    fmt.Printf(\"%d-%02d-%02dT%02d:%02d:%02d-00:00\\n\",\u000A        t.Year(), t.Month(), t.Day(),\u000A        t.Hour(), t.Minute(), t.Second())\u000A');codeLines.push('    ansic := \"Mon Jan _2 15:04:05 2006\"\u000A    _, e = time.Parse(ansic, \"8:41PM\")\u000A    p(e)\u000A}\u000A');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func main() {\u000A    p := fmt.Println\u000A');codeLines.push('    t := time.Now()\u000A    p(t.Format(time.RFC3339))\u000A');codeLines.push('    t1, e := time.Parse(\u000A        time.RFC3339,\u000A        \"2012-11-01T22:08:41+00:00\")\u000A    p(t1)\u000A');codeLines.push('    p(t.Format(\"3:04PM\"))\u000A    p(t.Format(\"Mon Jan _2 15:04:05 2006\"))\u000A    p(t.Format(\"2006-01-02T15:04:05.999999-07:00\"))\u000A    form := \"3 04 PM\"\u000A    t2, e := time.Parse(form, \"8 41 PM\")\u000A    p(t2)\u000A');codeLines.push('    fmt.Printf(\"%d-%02d-%02dT%02d:%02d:%02d-00:00\\n\",\u000A        t.Year(), t.Month(), t.Day(),\u000A        t.Hour(), t.Minute(), t.Second())\u000A');codeLines.push('    ansic := \"Mon Jan _2 15:04:05 2006\"\u000A    _, e = time.Parse(ansic, \"8:41PM\")\u000A    p(e)\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

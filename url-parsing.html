@@ -28,8 +28,8 @@
         
         <tr>
           <td class="docs">
-            <p>URL 提供了一个<a href="http://adam.heroku.com/past/2010/3/30/urls_are_the_uniform_way_to_locate_resources/">统一资源定位方式</a>。
-这里了解一下 Go 中是如何解析 URL 的。</p>
+            <p>URL 提供了<a href="http://adam.heroku.com/past/2010/3/30/urls_are_the_uniform_way_to_locate_resources/">统一资源定位方式</a>。
+这里展示了在 Go 中是如何解析 URL 的。</p>
 
           </td>
           <td class="code empty leading">
@@ -43,7 +43,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/LrApDagJuUc"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/8H-COYWkfQH"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -56,9 +56,11 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;net/url&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;strings&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;net&quot;</span>
+    <span class="s">&quot;net/url&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -78,8 +80,8 @@
         
         <tr>
           <td class="docs">
-            <p>我们将解析这个 URL 示例，它包含了一个 scheme，
-认证信息，主机名，端口，路径，查询参数和片段。</p>
+            <p>我们将解析这个 URL 示例，它包含了一个 scheme、
+认证信息、主机名、端口、路径、查询参数以及查询片段。</p>
 
           </td>
           <td class="code leading">
@@ -121,8 +123,8 @@
         
         <tr>
           <td class="docs">
-            <p><code>User</code> 包含了所有的认证信息，这里调用 <code>Username</code>
-和 <code>Password</code> 来获取独立值。</p>
+            <p><code>User</code> 包含了所有的认证信息，
+这里调用 <code>Username</code> 和 <code>Password</code> 来获取单独的值。</p>
 
           </td>
           <td class="code leading">
@@ -138,16 +140,16 @@
         
         <tr>
           <td class="docs">
-            <p><code>Host</code> 同时包括主机名和端口信息，如过端口存在的话，
-使用 <code>strings.Split()</code> 从 <code>Host</code> 中手动提取端口。</p>
+            <p><code>Host</code> 同时包括主机名和端口信息，如果端口存在的话，
+可以使用 <code>strings.Split()</code> 从 <code>Host</code> 中手动提取端口。</p>
 
           </td>
           <td class="code leading">
             
           <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Host</span><span class="p">)</span>
-    <span class="nx">h</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Split</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Host</span><span class="p">,</span> <span class="s">&quot;:&quot;</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">h</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">h</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+    <span class="nx">host</span><span class="p">,</span> <span class="nx">port</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">net</span><span class="p">.</span><span class="nx">SplitHostPort</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Host</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">host</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">port</span><span class="p">)</span>
 </pre></div>
 
           </td>
@@ -155,7 +157,7 @@
         
         <tr>
           <td class="docs">
-            <p>这里我们提出路径和查询片段信息。</p>
+            <p>这里我们提出路径和 <code>#</code> 后面的查询片段信息。</p>
 
           </td>
           <td class="code leading">
@@ -169,11 +171,10 @@
         
         <tr>
           <td class="docs">
-            <p>要得到字符串中的 <code>k=v</code> 这种格式的查询参数，可以使
-用 <code>RawQuery</code> 函数。你也可以将查询参数解析为一个
-map。已解析的查询参数 map 以查询字符串为键，对应
-值字符串切片为值，所以如果只想得到一个键对应的第
-一个值，将索引位置设置为 <code>[0]</code> 就行了。</p>
+            <p>要得到字符串中的 <code>k=v</code> 这种格式的查询参数，可以使用 <code>RawQuery</code> 函数。
+你也可以将查询参数解析为一个 map。已解析的查询参数 map 以查询字符串为键，
+已解析的查询参数会从字符串映射到到字符串的切片，
+因此如果您只想要第一个值，则索引为 <code>[0]</code>。</p>
 
           </td>
           <td class="code">
@@ -194,8 +195,8 @@ map。已解析的查询参数 map 以查询字符串为键，对应
         
         <tr>
           <td class="docs">
-            <p>运行我们的 URL 解析程序，显示全部我们提取的 URL 的
-不同数据块。</p>
+            <p>运行我们的 URL 解析程序，
+显示全部我们提取的 URL 的不同数据块。</p>
 
           </td>
           <td class="code">
@@ -231,7 +232,7 @@ map。已解析的查询参数 map 以查询字符串为键，对应
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"net/url\"\u000Aimport \"strings\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    s := \"postgres://user:pass@host.com:5432/path?k=v#f\"\u000A');codeLines.push('    u, err := url.Parse(s)\u000A    if err != nil {\u000A        panic(err)\u000A    }\u000A');codeLines.push('    fmt.Println(u.Scheme)\u000A');codeLines.push('    fmt.Println(u.User)\u000A    fmt.Println(u.User.Username())\u000A    p, _ := u.User.Password()\u000A    fmt.Println(p)\u000A');codeLines.push('    fmt.Println(u.Host)\u000A    h := strings.Split(u.Host, \":\")\u000A    fmt.Println(h[0])\u000A    fmt.Println(h[1])\u000A');codeLines.push('    fmt.Println(u.Path)\u000A    fmt.Println(u.Fragment)\u000A');codeLines.push('    fmt.Println(u.RawQuery)\u000A    m, _ := url.ParseQuery(u.RawQuery)\u000A    fmt.Println(m)\u000A    fmt.Println(m[\"k\"][0])\u000A}\u000A');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"net\"\u000A    \"net/url\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    s := \"postgres://user:pass@host.com:5432/path?k=v#f\"\u000A');codeLines.push('    u, err := url.Parse(s)\u000A    if err != nil {\u000A        panic(err)\u000A    }\u000A');codeLines.push('    fmt.Println(u.Scheme)\u000A');codeLines.push('    fmt.Println(u.User)\u000A    fmt.Println(u.User.Username())\u000A    p, _ := u.User.Password()\u000A    fmt.Println(p)\u000A');codeLines.push('    fmt.Println(u.Host)\u000A    host, port, _ := net.SplitHostPort(u.Host)\u000A    fmt.Println(host)\u000A    fmt.Println(port)\u000A');codeLines.push('    fmt.Println(u.Path)\u000A    fmt.Println(u.Fragment)\u000A');codeLines.push('    fmt.Println(u.RawQuery)\u000A    m, _ := url.ParseQuery(u.RawQuery)\u000A    fmt.Println(m)\u000A    fmt.Println(m[\"k\"][0])\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>
