@@ -29,8 +29,8 @@
         <tr>
           <td class="docs">
             <p><a href="http://zh.wikipedia.org/wiki/%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F"><em>环境变量</em></a>
-是一个<a href="http://www.12factor.net/config">为 Unix 程序传递配置信息</a>的普遍方式。
-让我们来看看如何设置，获取并列举环境变量。</p>
+是一种<a href="http://www.12factor.net/config">向 Unix 程序传递配置信息</a>的常见方式。
+让我们来看看如何设置、获取以及列出环境变量。</p>
 
           </td>
           <td class="code empty leading">
@@ -44,7 +44,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/VmZS1eVAmRH"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/ORoiF_9h42F"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -57,9 +57,11 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;os&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;strings&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+    <span class="s">&quot;strings&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -79,9 +81,9 @@
         
         <tr>
           <td class="docs">
-            <p>使用 <code>os.Setenv</code> 来设置一个键值对。使用 <code>os.Getenv</code>
-获取一个键对应的值。如果键不存在，将会返回一个空字符
-串。</p>
+            <p>使用 <code>os.Setenv</code> 来设置一个键值对。
+使用 <code>os.Getenv</code>获取一个键对应的值。
+如果键不存在，将会返回一个空字符串。</p>
 
           </td>
           <td class="code leading">
@@ -96,16 +98,16 @@
         
         <tr>
           <td class="docs">
-            <p>使用 <code>os.Environ</code> 来列出所有环境变量键值对。这个函数
-会返回一个 <code>KEY=value</code> 形式的字符串切片。你可以使用
-<code>strings.Split</code> 来得到键和值。这里我们打印所有的键。</p>
+            <p>使用 <code>os.Environ</code> 来列出所有环境变量键值对。
+这个函数会返回一个 <code>KEY=value</code> 形式的字符串切片。
+你可以使用 <code>strings.SplitN</code> 来得到键和值。这里我们打印所有的键。</p>
 
           </td>
           <td class="code">
             
           <div class="highlight"><pre>    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">()</span>
     <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">os</span><span class="p">.</span><span class="nx">Environ</span><span class="p">()</span> <span class="p">{</span>
-        <span class="nx">pair</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">Split</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="s">&quot;=&quot;</span><span class="p">)</span>
+        <span class="nx">pair</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nx">SplitN</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="s">&quot;=&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span><span class="p">(</span><span class="nx">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="p">}</span>
 <span class="p">}</span>
@@ -120,8 +122,8 @@
         
         <tr>
           <td class="docs">
-            <p>运行这个程序，显示我们在程序中设置的 <code>FOO</code> 的值，然而
-没有设置的 <code>BAR</code> 是空的。</p>
+            <p>运行这个程序，显示我们在程序中设置的 <code>FOO</code> 的值，
+然而没有设置的 <code>BAR</code> 是空的。</p>
 
           </td>
           <td class="code leading">
@@ -152,8 +154,7 @@
         
         <tr>
           <td class="docs">
-            <p>如果我们在运行前设置了 <code>BAR</code> 的值，那么运行程序将会获
-取到这个值。</p>
+            <p>如果我们在运行前设置了 <code>BAR</code> 的值，那么运行程序将会获取到这个值。</p>
 
           </td>
           <td class="code">
@@ -180,7 +181,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"os\"\u000Aimport \"strings\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    os.Setenv(\"FOO\", \"1\")\u000A    fmt.Println(\"FOO:\", os.Getenv(\"FOO\"))\u000A    fmt.Println(\"BAR:\", os.Getenv(\"BAR\"))\u000A');codeLines.push('    fmt.Println()\u000A    for _, e := range os.Environ() {\u000A        pair := strings.Split(e, \"=\")\u000A        fmt.Println(pair[0])\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"os\"\u000A    \"strings\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    os.Setenv(\"FOO\", \"1\")\u000A    fmt.Println(\"FOO:\", os.Getenv(\"FOO\"))\u000A    fmt.Println(\"BAR:\", os.Getenv(\"BAR\"))\u000A');codeLines.push('    fmt.Println()\u000A    for _, e := range os.Environ() {\u000A        pair := strings.SplitN(e, \"=\", 2)\u000A        fmt.Println(pair[0])\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

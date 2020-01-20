@@ -31,8 +31,18 @@
             <p>使用 <code>net/http</code> 包，我们可以轻松实现一个简单的 HTTP 服务器。</p>
 
           </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/6aewtsL_-Xx"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/f6MkSoMsF5D"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -58,7 +68,7 @@
           <td class="docs">
             <p><em>handlers</em> 是 <code>net/http</code> 服务器里面的一个基本概念。
 handler 对象实现了 <code>http.Handler</code> 接口。
-编写 handler 的常见方法是，在具有适当签名的函数上使用 <code>http.HandlerFunc</code> 适配。</p>
+编写 handler 的常见方法是，在具有适当签名的函数上使用 <code>http.HandlerFunc</code> 适配器。</p>
 
           </td>
           <td class="code leading">
@@ -144,9 +154,8 @@ response writer 被用于写入 HTTP 响应数据，这里我们简单的返回 
         
         <tr>
           <td class="docs">
-            <p>Finally, we call the <code>ListenAndServe</code> with the port
-and a handler. <code>nil</code> tells it to use the default
-router we&rsquo;ve just set up.</p>
+            <p>最后，我们调用 <code>ListenAndServe</code> 并带上端口和 handler。
+nil 表示使用我们刚刚设置的默认路由器。</p>
 
           </td>
           <td class="code">
@@ -202,7 +211,7 @@ router we&rsquo;ve just set up.</p>
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"net/http\"\u000A)\u000A');codeLines.push('func hello(w http.ResponseWriter, req *http.Request) {\u000A');codeLines.push('    fmt.Fprintf(w, \"hello\\n\")\u000A}\u000A');codeLines.push('func headers(w http.ResponseWriter, req *http.Request) {\u000A');codeLines.push('    for name, headers := range req.Header {\u000A        for _, h := range headers {\u000A            fmt.Fprintf(w, \"%v: %v\\n\", name, h)\u000A        }\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    http.HandleFunc(\"/hello\", hello)\u000A    http.HandleFunc(\"/headers\", headers)\u000A');codeLines.push('    http.ListenAndServe(\":8090\", nil)\u000A}\u000A');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"net/http\"\u000A)\u000A');codeLines.push('func hello(w http.ResponseWriter, req *http.Request) {\u000A');codeLines.push('    fmt.Fprintf(w, \"hello\\n\")\u000A}\u000A');codeLines.push('func headers(w http.ResponseWriter, req *http.Request) {\u000A');codeLines.push('    for name, headers := range req.Header {\u000A        for _, h := range headers {\u000A            fmt.Fprintf(w, \"%v: %v\\n\", name, h)\u000A        }\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    http.HandleFunc(\"/hello\", hello)\u000A    http.HandleFunc(\"/headers\", headers)\u000A');codeLines.push('    http.ListenAndServe(\":8090\", nil)\u000A}\u000A');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

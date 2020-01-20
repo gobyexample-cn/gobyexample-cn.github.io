@@ -32,8 +32,18 @@
 比如：Linux 下的 <code>dir/file</code> 和 Windows 下的 <code>dir\file</code>。</p>
 
           </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/Ejqian3FdbK"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/A_FRgV3Ys13"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -88,16 +98,6 @@
             <p>您应该总是使用 <code>Join</code> 代替手动拼接 <code>/</code> 和 <code>\</code>。
 除了可移植性，<code>Join</code> 还会删除多余的分隔符和目录，使得路径更加规范。</p>
 
-          </td>
-          <td class="code empty leading">
-            
-          
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            
           </td>
           <td class="code leading">
             
@@ -252,7 +252,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"path/filepath\"\u000A    \"strings\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    p := filepath.Join(\"dir1\", \"dir2\", \"filename\")\u000A    fmt.Println(\"p:\", p)\u000A');codeLines.push('');codeLines.push('    fmt.Println(filepath.Join(\"dir1//\", \"filename\"))\u000A    fmt.Println(filepath.Join(\"dir1/../dir1\", \"filename\"))\u000A');codeLines.push('    fmt.Println(\"Dir(p):\", filepath.Dir(p))\u000A    fmt.Println(\"Base(p):\", filepath.Base(p))\u000A');codeLines.push('    fmt.Println(filepath.IsAbs(\"dir/file\"))\u000A    fmt.Println(filepath.IsAbs(\"/dir/file\"))\u000A');codeLines.push('    filename := \"config.json\"\u000A');codeLines.push('    ext := filepath.Ext(filename)\u000A    fmt.Println(ext)\u000A');codeLines.push('    fmt.Println(strings.TrimSuffix(filename, ext))\u000A');codeLines.push('    rel, err := filepath.Rel(\"a/b\", \"a/b/t/file\")\u000A    if err != nil {\u000A        panic(err)\u000A    }\u000A    fmt.Println(rel)\u000A');codeLines.push('    rel, err = filepath.Rel(\"a/b\", \"a/c/t/file\")\u000A    if err != nil {\u000A        panic(err)\u000A    }\u000A    fmt.Println(rel)\u000A}\u000A');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"path/filepath\"\u000A    \"strings\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    p := filepath.Join(\"dir1\", \"dir2\", \"filename\")\u000A    fmt.Println(\"p:\", p)\u000A');codeLines.push('    fmt.Println(filepath.Join(\"dir1//\", \"filename\"))\u000A    fmt.Println(filepath.Join(\"dir1/../dir1\", \"filename\"))\u000A');codeLines.push('    fmt.Println(\"Dir(p):\", filepath.Dir(p))\u000A    fmt.Println(\"Base(p):\", filepath.Base(p))\u000A');codeLines.push('    fmt.Println(filepath.IsAbs(\"dir/file\"))\u000A    fmt.Println(filepath.IsAbs(\"/dir/file\"))\u000A');codeLines.push('    filename := \"config.json\"\u000A');codeLines.push('    ext := filepath.Ext(filename)\u000A    fmt.Println(ext)\u000A');codeLines.push('    fmt.Println(strings.TrimSuffix(filename, ext))\u000A');codeLines.push('    rel, err := filepath.Rel(\"a/b\", \"a/b/t/file\")\u000A    if err != nil {\u000A        panic(err)\u000A    }\u000A    fmt.Println(rel)\u000A');codeLines.push('    rel, err = filepath.Rel(\"a/b\", \"a/c/t/file\")\u000A    if err != nil {\u000A        panic(err)\u000A    }\u000A    fmt.Println(rel)\u000A}\u000A');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

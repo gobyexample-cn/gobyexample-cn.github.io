@@ -24,7 +24,7 @@
         
         <tr>
           <td class="docs">
-            <p>使用 <code>os.Exit</code> 来立即进行带给定状态的退出。</p>
+            <p>使用 <code>os.Exit</code> 可以立即以给定的状态退出程序。</p>
 
           </td>
           <td class="code empty leading">
@@ -38,7 +38,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/PJJ1-2PV1k"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/ImcwmsrT8A1"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -51,8 +51,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;os&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -72,8 +74,8 @@
         
         <tr>
           <td class="docs">
-            <p>当使用 <code>os.Exit</code> 时 <code>defer</code> 将<em>不会</em> 执行，所以这里的 <code>fmt.Println</code>
-将永远不会被调用。</p>
+            <p>当使用 <code>os.Exit</code> 时 <code>defer</code> 将<em>不会</em> 被执行，
+所以这里的 <code>fmt.Println</code> 将永远不会被调用。</p>
 
           </td>
           <td class="code leading">
@@ -100,9 +102,8 @@
         
         <tr>
           <td class="docs">
-            <p>注意，不像例如 C 语言，Go 不使用在 <code>main</code> 中返回一个整
-数来指明退出状态。如果你想以非零状态退出，那么你就要
-使用 <code>os.Exit</code>。</p>
+            <p>注意，不像例如 C 语言，Go 不使用在 <code>main</code> 中返回一个整数来指明退出状态。
+如果你想以非零状态退出，那么你就要使用 <code>os.Exit</code>。</p>
 
           </td>
           <td class="code empty">
@@ -117,8 +118,7 @@
         
         <tr>
           <td class="docs">
-            <p>如果你使用 <code>go run</code> 来运行 <code>exit.go</code>，那么退出状态将会被 <code>go</code>
-捕获并打印。</p>
+            <p>如果你使用 <code>go run</code> 来运行 <code>exit.go</code>，那么退出状态将会被 <code>go</code> 捕获并打印。</p>
 
           </td>
           <td class="code leading">
@@ -132,7 +132,7 @@
         
         <tr>
           <td class="docs">
-            <p>使用编译并执行一个二进制文件的方式，你可以在终端中查看退出状态。</p>
+            <p>通过编译并执行一个二进制文件的方式，你可以在终端中查看退出状态。</p>
 
           </td>
           <td class="code leading">
@@ -148,7 +148,7 @@
         
         <tr>
           <td class="docs">
-            <p>注意我们程序中的 <code>!</code> 永远不会被打印出来。</p>
+            <p>注意，程序中的 <code>!</code> 永远不会被打印出来。</p>
 
           </td>
           <td class="code empty">
@@ -166,7 +166,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000Aimport \"os\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    defer fmt.Println(\"!\")\u000A');codeLines.push('    os.Exit(3)\u000A}\u000A');codeLines.push('');codeLines.push('');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"os\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    defer fmt.Println(\"!\")\u000A');codeLines.push('    os.Exit(3)\u000A}\u000A');codeLines.push('');codeLines.push('');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

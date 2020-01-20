@@ -44,7 +44,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/lHu4WmRZwXv"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/mp1utuKPPQU"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -57,8 +57,10 @@
           </td>
           <td class="code leading">
             
-          <div class="highlight"><pre><span class="kn">import</span> <span class="s">&quot;os&quot;</span>
-<span class="kn">import</span> <span class="s">&quot;fmt&quot;</span>
+          <div class="highlight"><pre><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&quot;fmt&quot;</span>
+    <span class="s">&quot;os&quot;</span>
+<span class="p">)</span>
 </pre></div>
 
           </td>
@@ -78,9 +80,9 @@
         
         <tr>
           <td class="docs">
-            <p><code>os.Args</code> 提供原始命令行参数访问功能。注意，切片中
-的第一个参数是该程序的路径，并且 <code>os.Args[1:]</code>保存
-所有程序的参数。</p>
+            <p><code>os.Args</code> 提供原始命令行参数访问功能。
+注意，切片中的第一个参数是该程序的路径，
+而 <code>os.Args[1:]</code>保存了程序全部的参数。</p>
 
           </td>
           <td class="code leading">
@@ -94,7 +96,7 @@
         
         <tr>
           <td class="docs">
-            <p>你可以使用标准的索引位置方式取得单个参数的值。</p>
+            <p>你可以使用标准的下标方式取得单个参数的值。</p>
 
           </td>
           <td class="code leading">
@@ -126,8 +128,7 @@
         
         <tr>
           <td class="docs">
-            <p>要实验命令行参数，最好先使用 <code>go build</code> 编译一个可执行
-二进制文件</p>
+            <p>要实验命令行参数，最好先使用 <code>go build</code> 编译一个可执行二进制文件</p>
 
           </td>
           <td class="code leading">
@@ -166,7 +167,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"os\"\u000Aimport \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    argsWithProg := os.Args\u000A    argsWithoutProg := os.Args[1:]\u000A');codeLines.push('    arg := os.Args[3]\u000A');codeLines.push('    fmt.Println(argsWithProg)\u000A    fmt.Println(argsWithoutProg)\u000A    fmt.Println(arg)\u000A}\u000A');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"os\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    argsWithProg := os.Args\u000A    argsWithoutProg := os.Args[1:]\u000A');codeLines.push('    arg := os.Args[3]\u000A');codeLines.push('    fmt.Println(argsWithProg)\u000A    fmt.Println(argsWithoutProg)\u000A    fmt.Println(arg)\u000A}\u000A');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

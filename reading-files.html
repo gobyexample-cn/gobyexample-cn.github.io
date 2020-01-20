@@ -28,8 +28,8 @@
         
         <tr>
           <td class="docs">
-            <p>读写文件在很多程序中都是必须的基本任务。首先我们看看一
-些读文件的例子。</p>
+            <p>读写文件在很多程序中都是必须的基本任务。
+首先我们来看一些读文件的例子。</p>
 
           </td>
           <td class="code empty leading">
@@ -43,7 +43,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/sxepK3N-p1V"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/K4Emme4XKr6"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -70,8 +70,8 @@
         
         <tr>
           <td class="docs">
-            <p>读取文件需要经常进行错误检查，这个帮助方法可以精简下面
-的错误检查过程。</p>
+            <p>读取文件需要经常进行错误检查，
+这个帮助方法可以精简下面的错误检查过程。</p>
 
           </td>
           <td class="code leading">
@@ -100,8 +100,7 @@
         
         <tr>
           <td class="docs">
-            <p>也许大部分基本的文件读取任务是将文件内容读取到
-内存中。</p>
+            <p>最基本的文件读取任务或许就是将文件内容读取到内存中。</p>
 
           </td>
           <td class="code leading">
@@ -116,9 +115,8 @@
         
         <tr>
           <td class="docs">
-            <p>你经常会想对于一个文件是怎么读并且读取到哪一部分
-进行更多的控制。对于这个任务，从使用 <code>os.Open</code>
-打开一个文件获取一个 <code>os.File</code> 值开始。</p>
+            <p>您通常会希望对文件的读取方式和内容进行更多控制。
+对于这个任务，首先使用 <code>Open</code> 打开一个文件，以获取一个 <code>os.File</code> 值。</p>
 
           </td>
           <td class="code leading">
@@ -132,8 +130,8 @@
         
         <tr>
           <td class="docs">
-            <p>从文件开始位置读取一些字节。这里最多读取 5 个字
-节，并且这也是我们实际读取的字节数。</p>
+            <p>从文件的开始位置读取一些字节。
+最多允许读取 5 个字节，但还要注意实际读取了多少个。</p>
 
           </td>
           <td class="code leading">
@@ -141,7 +139,7 @@
           <div class="highlight"><pre>    <span class="nx">b1</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
     <span class="nx">n1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">b1</span><span class="p">)</span>
     <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d bytes: %s\n&quot;</span><span class="p">,</span> <span class="nx">n1</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">b1</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d bytes: %s\n&quot;</span><span class="p">,</span> <span class="nx">n1</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">b1</span><span class="p">[:</span><span class="nx">n1</span><span class="p">]))</span>
 </pre></div>
 
           </td>
@@ -149,8 +147,7 @@
         
         <tr>
           <td class="docs">
-            <p>你也可以 <code>Seek</code> 到一个文件中已知的位置并从这个位置开
-始进行读取。</p>
+            <p>你也可以 <code>Seek</code> 到一个文件中已知的位置，并从这个位置开始 <code>Read</code>。</p>
 
           </td>
           <td class="code leading">
@@ -160,7 +157,8 @@
     <span class="nx">b2</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">([]</span><span class="kt">byte</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
     <span class="nx">n2</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">f</span><span class="p">.</span><span class="nx">Read</span><span class="p">(</span><span class="nx">b2</span><span class="p">)</span>
     <span class="nx">check</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d bytes @ %d: %s\n&quot;</span><span class="p">,</span> <span class="nx">n2</span><span class="p">,</span> <span class="nx">o2</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">b2</span><span class="p">))</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%d bytes @ %d: &quot;</span><span class="p">,</span> <span class="nx">n2</span><span class="p">,</span> <span class="nx">o2</span><span class="p">)</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nx">Printf</span><span class="p">(</span><span class="s">&quot;%v\n&quot;</span><span class="p">,</span> <span class="nb">string</span><span class="p">(</span><span class="nx">b2</span><span class="p">[:</span><span class="nx">n2</span><span class="p">]))</span>
 </pre></div>
 
           </td>
@@ -168,9 +166,7 @@
         
         <tr>
           <td class="docs">
-            <p><code>io</code> 包提供了一些可以帮助我们进行文件读取的函数。
-例如，上面的读取可以使用 <code>ReadAtLeast</code> 得到一个更
-健壮的实现。</p>
+            <p>例如，<code>io</code> 包提供了一个更健壮的实现 <code>ReadAtLeast</code>，用于读取上面那种文件。</p>
 
           </td>
           <td class="code leading">
@@ -188,7 +184,7 @@
         
         <tr>
           <td class="docs">
-            <p>没有内置的回转支持，但是使用 <code>Seek(0, 0)</code> 实现。</p>
+            <p>没有内建的倒带，但是 <code>Seek(0, 0)</code> 实现了这一功能。</p>
 
           </td>
           <td class="code leading">
@@ -202,8 +198,12 @@
         
         <tr>
           <td class="docs">
-            <p><code>bufio</code> 包实现了带缓冲的读取，这不仅对于很多小的读
-取操作能够提升性能，也提供了很多附加的读取函数。</p>
+            <p><code>bufio</code> 包实现了带缓冲的读取，
+这不仅对于很多小的读取操作能够提升性能，
+也提供了很多附加的读取函数。
+<code>bufio</code> 包实现了带缓冲的 <code>Reader</code>，
+这对于提高读取大量小文件的效率，
+以及它提供的其他读取方法可能都有用。</p>
 
           </td>
           <td class="code leading">
@@ -219,25 +219,14 @@
         
         <tr>
           <td class="docs">
-            <p>任务结束后要关闭这个文件（通常这个操作应该在 <code>Open</code>
-操作后立即使用 <code>defer</code> 来完成）。</p>
+            <p>任务结束后要关闭这个文件
+（通常这个操作应该在 <code>Open</code> 操作后立即使用 <code>defer</code> 来完成）。</p>
 
-          </td>
-          <td class="code leading">
-            
-          <div class="highlight"><pre>    <span class="nx">f</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
-</pre></div>
-
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            
           </td>
           <td class="code">
             
-          <div class="highlight"><pre><span class="p">}</span>
+          <div class="highlight"><pre>    <span class="nx">f</span><span class="p">.</span><span class="nx">Close</span><span class="p">()</span>
+<span class="p">}</span>
 </pre></div>
 
           </td>
@@ -255,7 +244,7 @@
             
           <div class="highlight"><pre><span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;hello&quot;</span> &gt; /tmp/dat
 <span class="gp">$</span> <span class="nb">echo</span> <span class="s2">&quot;go&quot;</span> &gt;&gt;   /tmp/dat
-<span class="gp">$</span> go run reading-files.go 
+<span class="gp">$</span> go run reading-files.go
 <span class="go">hello</span>
 <span class="go">go</span>
 <span class="go">5 bytes: hello</span>
@@ -269,7 +258,7 @@
         
         <tr>
           <td class="docs">
-            <p>下面我们将看一下写入文件。</p>
+            <p>下面我们来看一下写入文件。</p>
 
           </td>
           <td class="code empty">
@@ -291,7 +280,7 @@
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"bufio\"\u000A    \"fmt\"\u000A    \"io\"\u000A    \"io/ioutil\"\u000A    \"os\"\u000A)\u000A');codeLines.push('func check(e error) {\u000A    if e != nil {\u000A        panic(e)\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    dat, err := ioutil.ReadFile(\"/tmp/dat\")\u000A    check(err)\u000A    fmt.Print(string(dat))\u000A');codeLines.push('    f, err := os.Open(\"/tmp/dat\")\u000A    check(err)\u000A');codeLines.push('    b1 := make([]byte, 5)\u000A    n1, err := f.Read(b1)\u000A    check(err)\u000A    fmt.Printf(\"%d bytes: %s\\n\", n1, string(b1))\u000A');codeLines.push('    o2, err := f.Seek(6, 0)\u000A    check(err)\u000A    b2 := make([]byte, 2)\u000A    n2, err := f.Read(b2)\u000A    check(err)\u000A    fmt.Printf(\"%d bytes @ %d: %s\\n\", n2, o2, string(b2))\u000A');codeLines.push('    o3, err := f.Seek(6, 0)\u000A    check(err)\u000A    b3 := make([]byte, 2)\u000A    n3, err := io.ReadAtLeast(f, b3, 2)\u000A    check(err)\u000A    fmt.Printf(\"%d bytes @ %d: %s\\n\", n3, o3, string(b3))\u000A');codeLines.push('    _, err = f.Seek(0, 0)\u000A    check(err)\u000A');codeLines.push('    r4 := bufio.NewReader(f)\u000A    b4, err := r4.Peek(5)\u000A    check(err)\u000A    fmt.Printf(\"5 bytes: %s\\n\", string(b4))\u000A');codeLines.push('    f.Close()\u000A');codeLines.push('}\u000A');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"bufio\"\u000A    \"fmt\"\u000A    \"io\"\u000A    \"io/ioutil\"\u000A    \"os\"\u000A)\u000A');codeLines.push('func check(e error) {\u000A    if e != nil {\u000A        panic(e)\u000A    }\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    dat, err := ioutil.ReadFile(\"/tmp/dat\")\u000A    check(err)\u000A    fmt.Print(string(dat))\u000A');codeLines.push('    f, err := os.Open(\"/tmp/dat\")\u000A    check(err)\u000A');codeLines.push('    b1 := make([]byte, 5)\u000A    n1, err := f.Read(b1)\u000A    check(err)\u000A    fmt.Printf(\"%d bytes: %s\\n\", n1, string(b1[:n1]))\u000A');codeLines.push('    o2, err := f.Seek(6, 0)\u000A    check(err)\u000A    b2 := make([]byte, 2)\u000A    n2, err := f.Read(b2)\u000A    check(err)\u000A    fmt.Printf(\"%d bytes @ %d: \", n2, o2)\u000A    fmt.Printf(\"%v\\n\", string(b2[:n2]))\u000A');codeLines.push('    o3, err := f.Seek(6, 0)\u000A    check(err)\u000A    b3 := make([]byte, 2)\u000A    n3, err := io.ReadAtLeast(f, b3, 2)\u000A    check(err)\u000A    fmt.Printf(\"%d bytes @ %d: %s\\n\", n3, o3, string(b3))\u000A');codeLines.push('    _, err = f.Seek(0, 0)\u000A    check(err)\u000A');codeLines.push('    r4 := bufio.NewReader(f)\u000A    b4, err := r4.Peek(5)\u000A    check(err)\u000A    fmt.Printf(\"5 bytes: %s\\n\", string(b4))\u000A');codeLines.push('    f.Close()\u000A}\u000A');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>

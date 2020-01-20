@@ -28,7 +28,7 @@
         
         <tr>
           <td class="docs">
-            <p>Go 写文件和我们前面看过的读操作有着相似的方式。</p>
+            <p>在 Go 中，写文件与我们前面看过的读文件方法类似。</p>
 
           </td>
           <td class="code empty leading">
@@ -42,7 +42,7 @@
             
           </td>
           <td class="code leading">
-            <a href="http://play.golang.org/p/FTODSdMNwek"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+            <a href="http://play.golang.org/p/UA7sfl1qppA"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
           <div class="highlight"><pre><span class="kn">package</span> <span class="nx">main</span>
 </pre></div>
 
@@ -96,8 +96,7 @@
         
         <tr>
           <td class="docs">
-            <p>开始，这里是展示如何写入一个字符串（或者只是一些
-字节）到一个文件。</p>
+            <p>开始！这里展示了如何写入一个字符串（或者只是一些字节）到一个文件。</p>
 
           </td>
           <td class="code leading">
@@ -126,8 +125,7 @@
         
         <tr>
           <td class="docs">
-            <p>打开文件后，习惯立即使用 defer 调用文件的 <code>Close</code>
-操作。</p>
+            <p>打开文件后，一个习惯性的操作是：立即使用 defer 调用文件的 <code>Close</code>。</p>
 
           </td>
           <td class="code leading">
@@ -140,7 +138,7 @@
         
         <tr>
           <td class="docs">
-            <p>你可以写入你想写入的字节切片</p>
+            <p>您可以按期望的那样 <code>Write</code> 字节切片。</p>
 
           </td>
           <td class="code leading">
@@ -170,7 +168,7 @@
         
         <tr>
           <td class="docs">
-            <p>调用 <code>Sync</code> 来将缓冲区的信息写入磁盘。</p>
+            <p>调用 <code>Sync</code> 将缓冲区的数据写入硬盘。</p>
 
           </td>
           <td class="code leading">
@@ -183,8 +181,7 @@
         
         <tr>
           <td class="docs">
-            <p><code>bufio</code> 提供了和我们前面看到的带缓冲的读取器一
-样的带缓冲的写入器。</p>
+            <p>与我们前面看到的带缓冲的 Reader 一样，<code>bufio</code> 还提供了的带缓冲的 Writer。</p>
 
           </td>
           <td class="code leading">
@@ -199,7 +196,7 @@
         
         <tr>
           <td class="docs">
-            <p>使用 <code>Flush</code> 来确保所有缓存的操作已写入底层写入器。</p>
+            <p>使用 <code>Flush</code> 来确保，已将所有的缓冲操作应用于底层 writer。</p>
 
           </td>
           <td class="code leading">
@@ -263,8 +260,8 @@
         
         <tr>
           <td class="docs">
-            <p>下面我们将看一些文件 I/O 的想法，就像我们已经看过的
-<code>stdin</code> 和 <code>stdout</code> 流。</p>
+            <p>我们刚刚看到了文件 I/O 思想，
+接下来，我们看看它在 <code>stdin</code> 和 <code>stdout</code> 流中的应用。</p>
 
           </td>
           <td class="code empty">
