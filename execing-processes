@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 执行进程</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'spawning-processes';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'signals';
+          }
+          
+      }
+  </script>
+  <body>
+
+    <div class="example" id="execing-processes">
+      <h2><a href="./">Go by Example 中文版</a>: 执行进程</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>在前面的例子中，我们了解了<a href="spawning-processes">生成外部进程</a>的知识，
+当我们需要在运行的 Go 流程中访问的外部流程时，便可以执行此操作。
+但是有时候，我们只想用其它（也许是非 Go）的进程，来完全替代当前的 Go 进程。
+这时，我们可以使用经典的 <a href="http://en.wikipedia.org/wiki/Exec_(operating_system)"><code>exec</code></a> 函数的 Go 的实现。</p>
+
+          </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            <a href="https://play.studygolang.com/p/_nmhf7Ap8xD"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;os&#34;</span>
+    <span class="s">&#34;os/exec&#34;</span>
+    <span class="s">&#34;syscall&#34;</span>
+<span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>在这个例子中，我们将执行 <code>ls</code> 命令。
+Go 要求我们提供想要执行的可执行文件的绝对路径，
+所以我们将使用 <code>exec.LookPath</code> 找到它（应该是 <code>/bin/ls</code>）。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">binary</span><span class="p">,</span> <span class="nx">lookErr</span> <span class="o">:=</span> <span class="nx">exec</span><span class="p">.</span><span class="nf">LookPath</span><span class="p">(</span><span class="s">&#34;ls&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">lookErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">lookErr</span><span class="p">)</span>
+    <span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>Exec</code> 需要的参数是切片的形式的（不是放在一起的一个大字符串）。
+我们给 <code>ls</code> 一些基本的参数。注意，第一个参数需要是程序名。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">args</span> <span class="o">:=</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span><span class="s">&#34;ls&#34;</span><span class="p">,</span> <span class="s">&#34;-a&#34;</span><span class="p">,</span> <span class="s">&#34;-l&#34;</span><span class="p">,</span> <span class="s">&#34;-h&#34;</span><span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p><code>Exec</code> 同样需要使用<a href="environment-variables">环境变量</a>。
+这里我们仅提供当前的环境变量。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">env</span> <span class="o">:=</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Environ</span><span class="p">()</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>这里是真正的 <code>syscall.Exec</code> 调用。
+如果这个调用成功，那么我们的进程将在这里结束，并被 <code>/bin/ls -a -l -h</code> 进程代替。
+如果存在错误，那么我们将会得到一个返回值。</p>
+
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">execErr</span> <span class="o">:=</span> <span class="nx">syscall</span><span class="p">.</span><span class="nf">Exec</span><span class="p">(</span><span class="nx">binary</span><span class="p">,</span> <span class="nx">args</span><span class="p">,</span> <span class="nx">env</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">execErr</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">execErr</span><span class="p">)</span>
+    <span class="p">}</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>当我们运行程序时，它会替换为 <code>ls</code>。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+<span class="gp">$</span> go run execing-processes.go
+<span class="go">total 16
+</span><span class="go">drwxr-xr-x  4 mark 136B Oct 3 16:29 .
+</span><span class="go">drwxr-xr-x 91 mark 3.0K Oct 3 12:50 ..
+</span><span class="go">-rw-r--r--  1 mark 1.3K Oct 3 16:28 execing-processes.go</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>注意 Go 没有提供 Unix 经典的  <code>fork</code> 函数。
+一般来说，这没有问题，因为启动协程、生成进程和执行进程，
+已经涵盖了 fork 的大多数使用场景。</p>
+
+          </td>
+          <td class="code empty">
+            
+          
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="signals">信号</a>
+      </p>
+      
+
+<p class="footer">
+    <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"os\"\u000A    \"os/exec\"\u000A    \"syscall\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    binary, lookErr :\u003D exec.LookPath(\"ls\")\u000A    if lookErr !\u003D nil {\u000A        panic(lookErr)\u000A    }\u000A');codeLines.push('    args :\u003D []string{\"ls\", \"-a\", \"-l\", \"-h\"}\u000A');codeLines.push('    env :\u003D os.Environ()\u000A');codeLines.push('    execErr :\u003D syscall.Exec(binary, args, env)\u000A    if execErr !\u003D nil {\u000A        panic(execErr)\u000A    }\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

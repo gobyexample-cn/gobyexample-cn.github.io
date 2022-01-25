@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 通道</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'goroutines';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'channel-buffering';
+          }
+          
+      }
+  </script>
+  <body>
+
+    <div class="example" id="channels">
+      <h2><a href="./">Go by Example 中文版</a>: 通道</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p><em>通道(channels)</em> 是连接多个协程的管道。
+你可以从一个协程将值发送到通道，然后在另一个协程中接收。</p>
+
+          </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            <a href="https://play.studygolang.com/p/BSqrJN1MQAX"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>使用 <code>make(chan val-type)</code> 创建一个新的通道。
+通道类型就是他们需要传递值的类型。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">messages</span> <span class="o">:=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">chan</span> <span class="kt">string</span><span class="p">)</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>使用 <code>channel &lt;-</code> 语法 <em>发送</em> 一个新的值到通道中。
+这里我们在一个新的协程中发送 <code>&quot;ping&quot;</code> 到上面创建的 <code>messages</code> 通道中。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span> <span class="nx">messages</span> <span class="o">&lt;-</span> <span class="s">&#34;ping&#34;</span> <span class="p">}()</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>使用 <code>&lt;-channel</code> 语法从通道中 <em>接收</em> 一个值。
+这里我们会收到在上面发送的 <code>&quot;ping&quot;</code> 消息并将其打印出来。</p>
+
+          </td>
+          <td class="code">
+            
+          <pre tabindex="0" class="chroma">
+    <span class="nx">msg</span> <span class="o">:=</span> <span class="o">&lt;-</span><span class="nx">messages</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">msg</span><span class="p">)</span>
+<span class="p">}</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>我们运行程序时，通过通道，
+成功的将消息 <code>&quot;ping&quot;</code> 从一个协程传送到了另一个协程中。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre tabindex="0" class="chroma">
+<span class="gp">$</span> go run channels.go
+<span class="go">ping</span></pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>默认发送和接收操作是阻塞的，直到发送方和接收方都就绪。
+这个特性允许我们，不使用任何其它的同步操作，
+就可以在程序结尾处等待消息 <code>&quot;ping&quot;</code>。</p>
+
+          </td>
+          <td class="code empty">
+            
+          
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="channel-buffering">通道缓冲</a>
+      </p>
+      
+
+<p class="footer">
+    <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000A');codeLines.push('func main() {\u000A');codeLines.push('    messages :\u003D make(chan string)\u000A');codeLines.push('    go func() { messages \u003C- \"ping\" }()\u000A');codeLines.push('    msg :\u003D \u003C-messages\u000A    fmt.Println(msg)\u000A}\u000A');codeLines.push('');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>
