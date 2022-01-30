@@ -44,7 +44,8 @@
           </td>
           <td class="code leading">
             <a href="https://play.studygolang.com/p/fxOwKEDxUyX"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
-          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          <pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
+</pre>
           </td>
         </tr>
         
@@ -54,10 +55,11 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+          <pre class="chroma"><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&#34;fmt&#34;</span>
     <span class="nx">s</span> <span class="s">&#34;strings&#34;</span>
-<span class="p">)</span></pre>
+<span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -69,8 +71,9 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-<span class="kd">var</span> <span class="nx">p</span> <span class="p">=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span></pre>
+          <pre class="chroma">
+<span class="kd">var</span> <span class="nx">p</span> <span class="p">=</span> <span class="nx">fmt</span><span class="p">.</span><span class="nx">Println</span>
+</pre>
           </td>
         </tr>
         
@@ -80,7 +83,8 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span></pre>
+          <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</pre>
           </td>
         </tr>
         
@@ -94,7 +98,7 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;Contains:  &#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nf">Contains</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">,</span> <span class="s">&#34;es&#34;</span><span class="p">))</span>
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;Count:     &#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nf">Count</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">,</span> <span class="s">&#34;t&#34;</span><span class="p">))</span>
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;HasPrefix: &#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nf">HasPrefix</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">,</span> <span class="s">&#34;te&#34;</span><span class="p">))</span>
@@ -107,7 +111,8 @@
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;Split:     &#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nf">Split</span><span class="p">(</span><span class="s">&#34;a-b-c-d-e&#34;</span><span class="p">,</span> <span class="s">&#34;-&#34;</span><span class="p">))</span>
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;ToLower:   &#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nf">ToLower</span><span class="p">(</span><span class="s">&#34;TEST&#34;</span><span class="p">))</span>
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;ToUpper:   &#34;</span><span class="p">,</span> <span class="nx">s</span><span class="p">.</span><span class="nf">ToUpper</span><span class="p">(</span><span class="s">&#34;test&#34;</span><span class="p">))</span>
-    <span class="nf">p</span><span class="p">()</span></pre>
+    <span class="nf">p</span><span class="p">()</span>
+</pre>
           </td>
         </tr>
         
@@ -119,10 +124,11 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;Len: &#34;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="s">&#34;hello&#34;</span><span class="p">))</span>
     <span class="nf">p</span><span class="p">(</span><span class="s">&#34;Char:&#34;</span><span class="p">,</span> <span class="s">&#34;hello&#34;</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
-<span class="p">}</span></pre>
+<span class="p">}</span>
+</pre>
           </td>
         </tr>
         
@@ -150,7 +156,7 @@ Go 使用 UTF-8 编码字符串，因此通常按原样使用。
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="gp">$</span> go run string-functions.go
+          <pre class="chroma"><span class="gp">$</span> go run string-functions.go
 <span class="go">Contains:   true
 </span><span class="go">Count:      2
 </span><span class="go">HasPrefix:  true
@@ -172,7 +178,7 @@ Go 使用 UTF-8 编码字符串，因此通常按原样使用。
           </td>
           <td class="code">
             
-          <pre tabindex="0" class="chroma"><span class="go">Len:  5
+          <pre class="chroma"><span class="go">Len:  5
 </span><span class="go">Char: 101</span></pre>
           </td>
         </tr>
@@ -185,8 +191,9 @@ Go 使用 UTF-8 编码字符串，因此通常按原样使用。
       </p>
       
 
-<p class="footer">
-    <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 和<a href="https://eli.thegreenplace.net">Eli Bendersky</a>编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    </p>
 
     </div>
     <script>

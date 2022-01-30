@@ -45,7 +45,8 @@
           </td>
           <td class="code leading">
             <a href="https://play.studygolang.com/p/II_mSnaUZJo"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
-          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          <pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
+</pre>
           </td>
         </tr>
         
@@ -55,11 +56,12 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+          <pre class="chroma"><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&#34;fmt&#34;</span>
     <span class="s">&#34;os&#34;</span>
     <span class="s">&#34;strings&#34;</span>
-<span class="p">)</span></pre>
+<span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -69,7 +71,8 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span></pre>
+          <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</pre>
           </td>
         </tr>
         
@@ -82,10 +85,11 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">os</span><span class="p">.</span><span class="nf">Setenv</span><span class="p">(</span><span class="s">&#34;FOO&#34;</span><span class="p">,</span> <span class="s">&#34;1&#34;</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;FOO:&#34;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getenv</span><span class="p">(</span><span class="s">&#34;FOO&#34;</span><span class="p">))</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;BAR:&#34;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getenv</span><span class="p">(</span><span class="s">&#34;BAR&#34;</span><span class="p">))</span></pre>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;BAR:&#34;</span><span class="p">,</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Getenv</span><span class="p">(</span><span class="s">&#34;BAR&#34;</span><span class="p">))</span>
+</pre>
           </td>
         </tr>
         
@@ -98,13 +102,14 @@
           </td>
           <td class="code">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">()</span>
     <span class="k">for</span> <span class="nx">_</span><span class="p">,</span> <span class="nx">e</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">os</span><span class="p">.</span><span class="nf">Environ</span><span class="p">()</span> <span class="p">{</span>
         <span class="nx">pair</span> <span class="o">:=</span> <span class="nx">strings</span><span class="p">.</span><span class="nf">SplitN</span><span class="p">(</span><span class="nx">e</span><span class="p">,</span> <span class="s">&#34;=&#34;</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
         <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">pair</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
     <span class="p">}</span>
-<span class="p">}</span></pre>
+<span class="p">}</span>
+</pre>
           </td>
         </tr>
         
@@ -120,7 +125,7 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
 <span class="gp">$</span> go run environment-variables.go
 <span class="go">FOO: 1
 </span><span class="go">BAR: </span></pre>
@@ -134,7 +139,7 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
 <span class="go">TERM_PROGRAM
 </span><span class="go">PATH
 </span><span class="go">SHELL
@@ -149,7 +154,7 @@
           </td>
           <td class="code">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
 <span class="gp">$</span> BAR=2 go run environment-variables.go
 <span class="go">FOO: 1
 </span><span class="go">BAR: 2
@@ -165,8 +170,9 @@
       </p>
       
 
-<p class="footer">
-    <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 和<a href="https://eli.thegreenplace.net">Eli Bendersky</a>编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    </p>
 
     </div>
     <script>

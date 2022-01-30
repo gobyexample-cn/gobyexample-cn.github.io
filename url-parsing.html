@@ -44,7 +44,8 @@
           </td>
           <td class="code leading">
             <a href="https://play.studygolang.com/p/UXUgtMlBACy"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
-          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+          <pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
+</pre>
           </td>
         </tr>
         
@@ -54,11 +55,12 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+          <pre class="chroma"><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&#34;fmt&#34;</span>
     <span class="s">&#34;net&#34;</span>
     <span class="s">&#34;net/url&#34;</span>
-<span class="p">)</span></pre>
+<span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -68,7 +70,8 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span></pre>
+          <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</pre>
           </td>
         </tr>
         
@@ -80,8 +83,9 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-    <span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;postgres://user:pass@host.com:5432/path?k=v#f&#34;</span></pre>
+          <pre class="chroma">
+    <span class="nx">s</span> <span class="o">:=</span> <span class="s">&#34;postgres://user:pass@host.com:5432/path?k=v#f&#34;</span>
+</pre>
           </td>
         </tr>
         
@@ -92,11 +96,12 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">u</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">url</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">s</span><span class="p">)</span>
     <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
         <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
-    <span class="p">}</span></pre>
+    <span class="p">}</span>
+</pre>
           </td>
         </tr>
         
@@ -107,8 +112,9 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">)</span></pre>
+          <pre class="chroma">
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Scheme</span><span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -120,11 +126,12 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">User</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">User</span><span class="p">.</span><span class="nf">Username</span><span class="p">())</span>
     <span class="nx">p</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">u</span><span class="p">.</span><span class="nx">User</span><span class="p">.</span><span class="nf">Password</span><span class="p">()</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span></pre>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">p</span><span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -135,11 +142,12 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Host</span><span class="p">)</span>
     <span class="nx">host</span><span class="p">,</span> <span class="nx">port</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">net</span><span class="p">.</span><span class="nf">SplitHostPort</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Host</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">host</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">port</span><span class="p">)</span></pre>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">port</span><span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -150,9 +158,10 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Path</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Fragment</span><span class="p">)</span></pre>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">Fragment</span><span class="p">)</span>
+</pre>
           </td>
         </tr>
         
@@ -166,12 +175,13 @@
           </td>
           <td class="code">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">RawQuery</span><span class="p">)</span>
     <span class="nx">m</span><span class="p">,</span> <span class="nx">_</span> <span class="o">:=</span> <span class="nx">url</span><span class="p">.</span><span class="nf">ParseQuery</span><span class="p">(</span><span class="nx">u</span><span class="p">.</span><span class="nx">RawQuery</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">m</span><span class="p">)</span>
     <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">m</span><span class="p">[</span><span class="s">&#34;k&#34;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
-<span class="p">}</span></pre>
+<span class="p">}</span>
+</pre>
           </td>
         </tr>
         
@@ -187,7 +197,7 @@
           </td>
           <td class="code">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
 <span class="gp">$</span> go run url-parsing.go 
 <span class="go">postgres
 </span><span class="go">user:pass
@@ -212,8 +222,9 @@
       </p>
       
 
-<p class="footer">
-    <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 和<a href="https://eli.thegreenplace.net">Eli Bendersky</a>编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    </p>
 
     </div>
     <script>

@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: Embedding</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'interfaces';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'errors';
+          }
+          
+      }
+  </script>
+  <body>
+
+    <div class="example" id="embedding">
+      <h2><a href="./">Go by Example 中文版</a>: Embedding</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Go支持对于结构体(struct)和接口(interfaces)的 <em>嵌入(embedding)</em>
+以表达一种更加无缝的 <em>组合(composition)</em> 类型</p>
+
+          </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            <a href="https://play.studygolang.com/p/H7Y5_WdmyMW"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma"><span class="kn">import</span> <span class="s">&#34;fmt&#34;</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma"><span class="kd">type</span> <span class="nx">base</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">num</span> <span class="kt">int</span>
+<span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma"><span class="kd">func</span> <span class="p">(</span><span class="nx">b</span> <span class="nx">base</span><span class="p">)</span> <span class="nf">describe</span><span class="p">()</span> <span class="kt">string</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Sprintf</span><span class="p">(</span><span class="s">&#34;base with num=%v&#34;</span><span class="p">,</span> <span class="nx">b</span><span class="p">.</span><span class="nx">num</span><span class="p">)</span>
+<span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>一个 <code>container</code> <em>嵌入</em> 了一个 <code>base</code>.
+一个嵌入看起来像一个没有名字的字段</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+<span class="kd">type</span> <span class="nx">container</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">base</span>
+    <span class="nx">str</span> <span class="kt">string</span>
+<span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>当创建含有嵌入的结构体，必须对嵌入进行显式的初始化；
+在这里使用嵌入的类型当作字段的名字</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">co</span> <span class="o">:=</span> <span class="nx">container</span><span class="p">{</span>
+        <span class="nx">base</span><span class="p">:</span> <span class="nx">base</span><span class="p">{</span>
+            <span class="nx">num</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+        <span class="p">},</span>
+        <span class="nx">str</span><span class="p">:</span> <span class="s">&#34;some name&#34;</span><span class="p">,</span>
+    <span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们可以直接在 <code>co</code> 上访问 base 中定义的字段,
+例如： <code>co.num</code>.</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;co={num: %v, str: %v}\n&#34;</span><span class="p">,</span> <span class="nx">co</span><span class="p">.</span><span class="nx">num</span><span class="p">,</span> <span class="nx">co</span><span class="p">.</span><span class="nx">str</span><span class="p">)</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>或者，我们可以使用嵌入的类型名拼写出完整的路径。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;also num:&#34;</span><span class="p">,</span> <span class="nx">co</span><span class="p">.</span><span class="nx">base</span><span class="p">.</span><span class="nx">num</span><span class="p">)</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>由于 <code>container</code> 嵌入了 <code>base</code>，因此<code>base</code>的方法
+也成为了 <code>container</code> 的方法。在这里我们直接在 <code>co</code> 上
+调用了一个从 <code>base</code> 嵌入的方法。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;describe:&#34;</span><span class="p">,</span> <span class="nx">co</span><span class="p">.</span><span class="nf">describe</span><span class="p">())</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">    <span class="kd">type</span> <span class="nx">describer</span> <span class="kd">interface</span> <span class="p">{</span>
+        <span class="nf">describe</span><span class="p">()</span> <span class="kt">string</span>
+    <span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>可以使用带有方法的嵌入结构来赋予接口实现到其他结构上。
+因为嵌入了 <code>base</code> ，在这里我们看到 <code>container</code>
+也实现了 <code>describer</code> 接口。</p>
+
+          </td>
+          <td class="code">
+            
+          <pre class="chroma">
+    <span class="kd">var</span> <span class="nx">d</span> <span class="nx">describer</span> <span class="p">=</span> <span class="nx">co</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;describer:&#34;</span><span class="p">,</span> <span class="nx">d</span><span class="p">.</span><span class="nf">describe</span><span class="p">())</span>
+<span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre class="chroma"><span class="gp">$</span> go run embedding.go
+<span class="go">co={num: 1, str: some name}
+</span><span class="go">also num: 1
+</span><span class="go">describe: base with num=1
+</span><span class="go">describer: base with num=1</span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="errors">错误处理</a>
+      </p>
+      
+
+    <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 和<a href="https://eli.thegreenplace.net">Eli Bendersky</a>编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    </p>
+
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import \"fmt\"\u000A');codeLines.push('type base struct {\u000A    num int\u000A}\u000A');codeLines.push('func (b base) describe() string {\u000A    return fmt.Sprintf(\"base with num\u003D%v\", b.num)\u000A}\u000A');codeLines.push('type container struct {\u000A    base\u000A    str string\u000A}\u000A');codeLines.push('func main() {\u000A');codeLines.push('    co :\u003D container{\u000A        base: base{\u000A            num: 1,\u000A        },\u000A        str: \"some name\",\u000A    }\u000A');codeLines.push('    fmt.Printf(\"co\u003D{num: %v, str: %v}\\n\", co.num, co.str)\u000A');codeLines.push('    fmt.Println(\"also num:\", co.base.num)\u000A');codeLines.push('    fmt.Println(\"describe:\", co.describe())\u000A');codeLines.push('    type describer interface {\u000A        describe() string\u000A    }\u000A');codeLines.push('    var d describer \u003D co\u000A    fmt.Println(\"describer:\", d.describe())\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>

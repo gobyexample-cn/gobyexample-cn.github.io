@@ -28,8 +28,8 @@
         
         <tr>
           <td class="docs">
-            <p>在前面的例子中，我们看到了如何使用原子操作来管理简单的计数器。
-对于更加复杂的情况，我们可以使用一个<em><a href="http://zh.wikipedia.org/wiki/%E4%BA%92%E6%96%A5%E9%94%81">互斥锁</a></em>
+            <p>在前面的例子中，我们看到了如何使用原子操作(atomic-counters)来管理简单的计数器。
+对于更加复杂的情况，我们可以使用一个<em><a href="http://zh.wikipedia.org/wiki/%E4%BA%92%E6%96%A5%E9%94%81">互斥量</a></em>
 来在 Go 协程间安全的访问数据。</p>
 
           </td>
@@ -44,8 +44,9 @@
             
           </td>
           <td class="code leading">
-            <a href="https://play.studygolang.com/p/88LhRI1b0Qp"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
-          <pre tabindex="0" class="chroma"><span class="kn">package</span> <span class="nx">main</span></pre>
+            <a href="https://play.studygolang.com/p/GCobOgyGtJD"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
+</pre>
           </td>
         </tr>
         
@@ -55,176 +56,142 @@
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma"><span class="kn">import</span> <span class="p">(</span>
+          <pre class="chroma"><span class="kn">import</span> <span class="p">(</span>
     <span class="s">&#34;fmt&#34;</span>
-    <span class="s">&#34;math/rand&#34;</span>
     <span class="s">&#34;sync&#34;</span>
-    <span class="s">&#34;sync/atomic&#34;</span>
-    <span class="s">&#34;time&#34;</span>
-<span class="p">)</span></pre>
+<span class="p">)</span>
+</pre>
           </td>
         </tr>
         
         <tr>
           <td class="docs">
-            
-          </td>
-          <td class="code leading">
-            
-          <pre tabindex="0" class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span></pre>
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>在这个例子中，<code>state</code> 是一个 map。</p>
+            <p>Container 中定义了 counters 的 map ，由于我们希望从多个 goroutine 同时更新它，
+因此我们添加了一个 互斥锁Mutex 来同步访问。
+请注意不能复制互斥锁，如果需要传递这个 <code>struct</code>，应使用指针完成。</p>
 
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-    <span class="kd">var</span> <span class="nx">state</span> <span class="p">=</span> <span class="nb">make</span><span class="p">(</span><span class="kd">map</span><span class="p">[</span><span class="kt">int</span><span class="p">]</span><span class="kt">int</span><span class="p">)</span></pre>
+          <pre class="chroma">
+<span class="kd">type</span> <span class="nx">Container</span> <span class="kd">struct</span> <span class="p">{</span>
+    <span class="nx">mu</span>       <span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span>
+    <span class="nx">counters</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span>
+<span class="p">}</span>
+</pre>
           </td>
         </tr>
         
         <tr>
           <td class="docs">
-            <p><code>mutex</code> 将同步对 <code>state</code> 的访问。</p>
+            <p>在访问 <code>counters</code> 之前锁定互斥锁；
+使用 [defer]（defer） 在函数结束时解锁。</p>
 
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-    <span class="kd">var</span> <span class="nx">mutex</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">sync</span><span class="p">.</span><span class="nx">Mutex</span><span class="p">{}</span></pre>
+          <pre class="chroma"><span class="kd">func</span> <span class="p">(</span><span class="nx">c</span> <span class="o">*</span><span class="nx">Container</span><span class="p">)</span> <span class="nf">inc</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">)</span> <span class="p">{</span>
+</pre>
           </td>
         </tr>
         
         <tr>
           <td class="docs">
-            <p>我们会持续追踪读写操作的数量。</p>
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">    <span class="nx">c</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
+    <span class="k">defer</span> <span class="nx">c</span><span class="p">.</span><span class="nx">mu</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
+    <span class="nx">c</span><span class="p">.</span><span class="nx">counters</span><span class="p">[</span><span class="nx">name</span><span class="p">]</span><span class="o">++</span>
+<span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>请注意，互斥量的零值是可用的，因此这里不需要初始化。</p>
 
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-    <span class="kd">var</span> <span class="nx">readOps</span> <span class="kt">uint64</span>
-    <span class="kd">var</span> <span class="nx">writeOps</span> <span class="kt">uint64</span></pre>
+          <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nx">c</span> <span class="o">:=</span> <span class="nx">Container</span><span class="p">{</span>
+</pre>
           </td>
         </tr>
         
         <tr>
           <td class="docs">
-            <p>这里我们启动 100 个协程，
-每个协程以每 1ms 一次的频率来重复读取 state。</p>
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">        <span class="nx">counters</span><span class="p">:</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">int</span><span class="p">{</span><span class="s">&#34;a&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&#34;b&#34;</span><span class="p">:</span> <span class="mi">0</span><span class="p">},</span>
+    <span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">    <span class="kd">var</span> <span class="nx">wg</span> <span class="nx">sync</span><span class="p">.</span><span class="nx">WaitGroup</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>这个函数在循环中递增对 name 的计数</p>
 
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-    <span class="k">for</span> <span class="nx">r</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">r</span> <span class="p">&lt;</span> <span class="mi">100</span><span class="p">;</span> <span class="nx">r</span><span class="o">++</span> <span class="p">{</span>
-        <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-            <span class="nx">total</span> <span class="o">:=</span> <span class="mi">0</span>
-            <span class="k">for</span> <span class="p">{</span></pre>
+          <pre class="chroma">
+    <span class="nx">doIncrement</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">n</span> <span class="kt">int</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">for</span> <span class="nx">i</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">i</span> <span class="p">&lt;</span> <span class="nx">n</span><span class="p">;</span> <span class="nx">i</span><span class="o">++</span> <span class="p">{</span>
+            <span class="nx">c</span><span class="p">.</span><span class="nf">inc</span><span class="p">(</span><span class="nx">name</span><span class="p">)</span>
+        <span class="p">}</span>
+        <span class="nx">wg</span><span class="p">.</span><span class="nf">Done</span><span class="p">()</span>
+    <span class="p">}</span>
+</pre>
           </td>
         </tr>
         
         <tr>
           <td class="docs">
-            <p>每次循环读取，我们使用一个键来进行访问，
-<code>Lock()</code> 这个 <code>mutex</code> 来确保对 <code>state</code> 的独占访问，
-读取选定的键的值，<code>Unlock()</code> 这个 mutex，并将 <code>ops</code> 值加 1。</p>
+            <p>同时运行多个 goroutines;
+请注意，它们都访问相同的 <code>Container</code>，其中两个访问相同的计数器。</p>
 
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
-                <span class="nx">key</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-                <span class="nx">mutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-                <span class="nx">total</span> <span class="o">+=</span> <span class="nx">state</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span>
-                <span class="nx">mutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-                <span class="nx">atomic</span><span class="p">.</span><span class="nf">AddUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">readOps</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span></pre>
+          <pre class="chroma">
+    <span class="nx">wg</span><span class="p">.</span><span class="nf">Add</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nf">doIncrement</span><span class="p">(</span><span class="s">&#34;a&#34;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nf">doIncrement</span><span class="p">(</span><span class="s">&#34;a&#34;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+    <span class="k">go</span> <span class="nf">doIncrement</span><span class="p">(</span><span class="s">&#34;b&#34;</span><span class="p">,</span> <span class="mi">10000</span><span class="p">)</span>
+</pre>
           </td>
         </tr>
         
         <tr>
           <td class="docs">
-            <p>在下次读取前等待片刻。</p>
-
-          </td>
-          <td class="code leading">
-            
-          <pre tabindex="0" class="chroma">
-                <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}()</span>
-    <span class="p">}</span></pre>
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>同样的，我们启动 10 个协程来模拟写入操作，
-使用和读取相同的模式。</p>
-
-          </td>
-          <td class="code leading">
-            
-          <pre tabindex="0" class="chroma">
-    <span class="k">for</span> <span class="nx">w</span> <span class="o">:=</span> <span class="mi">0</span><span class="p">;</span> <span class="nx">w</span> <span class="p">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="nx">w</span><span class="o">++</span> <span class="p">{</span>
-        <span class="k">go</span> <span class="kd">func</span><span class="p">()</span> <span class="p">{</span>
-            <span class="k">for</span> <span class="p">{</span>
-                <span class="nx">key</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
-                <span class="nx">val</span> <span class="o">:=</span> <span class="nx">rand</span><span class="p">.</span><span class="nf">Intn</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
-                <span class="nx">mutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-                <span class="nx">state</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span> <span class="p">=</span> <span class="nx">val</span>
-                <span class="nx">mutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-                <span class="nx">atomic</span><span class="p">.</span><span class="nf">AddUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">writeOps</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
-                <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Millisecond</span><span class="p">)</span>
-            <span class="p">}</span>
-        <span class="p">}()</span>
-    <span class="p">}</span></pre>
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>让这 10 个协程对 <code>state</code> 和 <code>mutex</code> 的操作持续 1 s。</p>
-
-          </td>
-          <td class="code leading">
-            
-          <pre tabindex="0" class="chroma">
-    <span class="nx">time</span><span class="p">.</span><span class="nf">Sleep</span><span class="p">(</span><span class="nx">time</span><span class="p">.</span><span class="nx">Second</span><span class="p">)</span></pre>
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>获取并输出最终的操作计数。</p>
-
-          </td>
-          <td class="code leading">
-            
-          <pre tabindex="0" class="chroma">
-    <span class="nx">readOpsFinal</span> <span class="o">:=</span> <span class="nx">atomic</span><span class="p">.</span><span class="nf">LoadUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">readOps</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;readOps:&#34;</span><span class="p">,</span> <span class="nx">readOpsFinal</span><span class="p">)</span>
-    <span class="nx">writeOpsFinal</span> <span class="o">:=</span> <span class="nx">atomic</span><span class="p">.</span><span class="nf">LoadUint64</span><span class="p">(</span><span class="o">&amp;</span><span class="nx">writeOps</span><span class="p">)</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;writeOps:&#34;</span><span class="p">,</span> <span class="nx">writeOpsFinal</span><span class="p">)</span></pre>
-          </td>
-        </tr>
-        
-        <tr>
-          <td class="docs">
-            <p>对 <code>state</code> 使用一个最终的锁，展示它是如何结束的。</p>
+            <p>等待上面的 goroutines 都执行结束</p>
 
           </td>
           <td class="code">
             
-          <pre tabindex="0" class="chroma">
-    <span class="nx">mutex</span><span class="p">.</span><span class="nf">Lock</span><span class="p">()</span>
-    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;state:&#34;</span><span class="p">,</span> <span class="nx">state</span><span class="p">)</span>
-    <span class="nx">mutex</span><span class="p">.</span><span class="nf">Unlock</span><span class="p">()</span>
-<span class="p">}</span></pre>
+          <pre class="chroma">
+    <span class="nx">wg</span><span class="p">.</span><span class="nf">Wait</span><span class="p">()</span>
+    <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">c</span><span class="p">.</span><span class="nx">counters</span><span class="p">)</span>
+<span class="p">}</span>
+</pre>
           </td>
         </tr>
         
@@ -234,16 +201,14 @@
         
         <tr>
           <td class="docs">
-            <p>运行这个程序，显示我们进行了大约 90,000 次 <code>mutex</code> 同步的 <code>state</code> 操作。</p>
+            <p>运行这个程序显示计数器更新和我们期望的一致</p>
 
           </td>
           <td class="code leading">
             
-          <pre tabindex="0" class="chroma">
+          <pre class="chroma">
 <span class="gp">$</span> go run mutexes.go
-<span class="go">readOps: 83285
-</span><span class="go">writeOps: 8320
-</span><span class="go">state: map[1:97 4:53 0:33 2:15 3:2]</span></pre>
+<span class="go">map[a:20000 b:10000]</span></pre>
           </td>
         </tr>
         
@@ -267,13 +232,14 @@
       </p>
       
 
-<p class="footer">
-    <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 和<a href="https://eli.thegreenplace.net">Eli Bendersky</a>编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    </p>
 
     </div>
     <script>
       var codeLines = [];
-      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"math/rand\"\u000A    \"sync\"\u000A    \"sync/atomic\"\u000A    \"time\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    var state \u003D make(map[int]int)\u000A');codeLines.push('    var mutex \u003D \u0026sync.Mutex{}\u000A');codeLines.push('    var readOps uint64\u000A    var writeOps uint64\u000A');codeLines.push('    for r :\u003D 0; r \u003C 100; r++ {\u000A        go func() {\u000A            total :\u003D 0\u000A            for {\u000A');codeLines.push('                key :\u003D rand.Intn(5)\u000A                mutex.Lock()\u000A                total +\u003D state[key]\u000A                mutex.Unlock()\u000A                atomic.AddUint64(\u0026readOps, 1)\u000A');codeLines.push('                time.Sleep(time.Millisecond)\u000A            }\u000A        }()\u000A    }\u000A');codeLines.push('    for w :\u003D 0; w \u003C 10; w++ {\u000A        go func() {\u000A            for {\u000A                key :\u003D rand.Intn(5)\u000A                val :\u003D rand.Intn(100)\u000A                mutex.Lock()\u000A                state[key] \u003D val\u000A                mutex.Unlock()\u000A                atomic.AddUint64(\u0026writeOps, 1)\u000A                time.Sleep(time.Millisecond)\u000A            }\u000A        }()\u000A    }\u000A');codeLines.push('    time.Sleep(time.Second)\u000A');codeLines.push('    readOpsFinal :\u003D atomic.LoadUint64(\u0026readOps)\u000A    fmt.Println(\"readOps:\", readOpsFinal)\u000A    writeOpsFinal :\u003D atomic.LoadUint64(\u0026writeOps)\u000A    fmt.Println(\"writeOps:\", writeOpsFinal)\u000A');codeLines.push('    mutex.Lock()\u000A    fmt.Println(\"state:\", state)\u000A    mutex.Unlock()\u000A}\u000A');codeLines.push('');codeLines.push('');
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"fmt\"\u000A    \"sync\"\u000A)\u000A');codeLines.push('type Container struct {\u000A    mu       sync.Mutex\u000A    counters map[string]int\u000A}\u000A');codeLines.push('func (c *Container) inc(name string) {\u000A');codeLines.push('    c.mu.Lock()\u000A    defer c.mu.Unlock()\u000A    c.counters[name]++\u000A}\u000A');codeLines.push('func main() {\u000A    c :\u003D Container{\u000A');codeLines.push('        counters: map[string]int{\"a\": 0, \"b\": 0},\u000A    }\u000A');codeLines.push('    var wg sync.WaitGroup\u000A');codeLines.push('    doIncrement :\u003D func(name string, n int) {\u000A        for i :\u003D 0; i \u003C n; i++ {\u000A            c.inc(name)\u000A        }\u000A        wg.Done()\u000A    }\u000A');codeLines.push('    wg.Add(3)\u000A    go doIncrement(\"a\", 10000)\u000A    go doIncrement(\"a\", 10000)\u000A    go doIncrement(\"b\", 10000)\u000A');codeLines.push('    wg.Wait()\u000A    fmt.Println(c.counters)\u000A}\u000A');codeLines.push('');codeLines.push('');
     </script>
     <script src="site.js" async></script>
   </body>
