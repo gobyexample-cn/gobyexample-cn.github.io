@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Go by Example 中文版: 文本模板</title>
+    <link rel=stylesheet href="site.css">
+  </head>
+  <script>
+      onkeydown = (e) => {
+          
+          if (e.key == "ArrowLeft") {
+              window.location.href = 'string-formatting';
+          }
+          
+          
+          if (e.key == "ArrowRight") {
+              window.location.href = 'regular-expressions';
+          }
+          
+      }
+  </script>
+  <body>
+
+    <div class="example" id="text-templates">
+      <h2><a href="./">Go by Example 中文版</a>: 文本模板</h2>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            <p>Go 使用 <code>text/template</code> 包为创建动态内容或向用户显示自定义输出提供了内置支持。
+一个名为 <code>html/template</code> 的兄弟软件包提供了相同的 API，但具有额外的安全功能，被用于生成 HTML。</p>
+
+          </td>
+          <td class="code empty leading">
+            
+          
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            <a href="https://play.studygolang.com/p/a6JSWGUefWK"><img title="Run code" src="play.png" class="run" /></a><img title="Copy code" src="clipboard.png" class="copy" />
+          <pre class="chroma"><span class="kn">package</span> <span class="nx">main</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma"><span class="kn">import</span> <span class="p">(</span>
+    <span class="s">&#34;os&#34;</span>
+    <span class="s">&#34;text/template&#34;</span>
+<span class="p">)</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma"><span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们可以创建一个新模板，并从字符串解析其正文。
+模板是静态文本和包含在”动作“中用于动态插入内容的混合体。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">t1</span> <span class="o">:=</span> <span class="nx">template</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="s">&#34;t1&#34;</span><span class="p">)</span>
+    <span class="nx">t1</span><span class="p">,</span> <span class="nx">err</span> <span class="o">:=</span> <span class="nx">t1</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">&#34;Value is {{.}}\n&#34;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="nx">err</span> <span class="o">!=</span> <span class="kc">nil</span> <span class="p">{</span>
+        <span class="nb">panic</span><span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+    <span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>或者，我们可以使用 <code>template.Must</code> 函数，在 <code>Parse</code> 错误时返回 panic。
+这对于在全局作用域中初始化的模板非常有用。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">t1</span> <span class="p">=</span> <span class="nx">template</span><span class="p">.</span><span class="nf">Must</span><span class="p">(</span><span class="nx">t1</span><span class="p">.</span><span class="nf">Parse</span><span class="p">(</span><span class="s">&#34;Value: {{.}}\n&#34;</span><span class="p">))</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>通过“执行”模板，我们生成其文本，其中包含其“动作”的具体值。
+<code>{{.}}</code> 动作被作为参数传递给 <code>Execute</code> 的值所代替。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">t1</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&#34;some text&#34;</span><span class="p">)</span>
+    <span class="nx">t1</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+    <span class="nx">t1</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+        <span class="s">&#34;Go&#34;</span><span class="p">,</span>
+        <span class="s">&#34;Rust&#34;</span><span class="p">,</span>
+        <span class="s">&#34;C++&#34;</span><span class="p">,</span>
+        <span class="s">&#34;C#&#34;</span><span class="p">,</span>
+    <span class="p">})</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>我们将在下面使用辅助函数。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">Create</span> <span class="o">:=</span> <span class="kd">func</span><span class="p">(</span><span class="nx">name</span><span class="p">,</span> <span class="nx">t</span> <span class="kt">string</span><span class="p">)</span> <span class="o">*</span><span class="nx">template</span><span class="p">.</span><span class="nx">Template</span> <span class="p">{</span>
+        <span class="k">return</span> <span class="nx">template</span><span class="p">.</span><span class="nf">Must</span><span class="p">(</span><span class="nx">template</span><span class="p">.</span><span class="nf">New</span><span class="p">(</span><span class="nx">name</span><span class="p">).</span><span class="nf">Parse</span><span class="p">(</span><span class="nx">t</span><span class="p">))</span>
+    <span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>如果数据是一个结构体，我们可以使用 <code>{{.FieldName}}</code> 动作来访问其字段。
+这些字段应该是导出的，以便在模板执行时可访问。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">t2</span> <span class="o">:=</span> <span class="nf">Create</span><span class="p">(</span><span class="s">&#34;t2&#34;</span><span class="p">,</span> <span class="s">&#34;Name: {{.Name}}\n&#34;</span><span class="p">)</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">    <span class="nx">t2</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="kd">struct</span> <span class="p">{</span>
+        <span class="nx">Name</span> <span class="kt">string</span>
+    <span class="p">}{</span><span class="s">&#34;Jane Doe&#34;</span><span class="p">})</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>这同样适用于 map；在 map 中没有限制键名的大小写。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">t2</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="kd">map</span><span class="p">[</span><span class="kt">string</span><span class="p">]</span><span class="kt">string</span><span class="p">{</span>
+        <span class="s">&#34;Name&#34;</span><span class="p">:</span> <span class="s">&#34;Mickey Mouse&#34;</span><span class="p">,</span>
+    <span class="p">})</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>if/else 提供了条件执行模板。如果一个值是类型的默认值，例如 0、空字符串、空指针等，
+则该值被认为是 false。
+这个示例演示了另一个模板特性：使用 <code>-</code> 在动作中去除空格。</p>
+
+          </td>
+          <td class="code leading">
+            
+          <pre class="chroma">
+    <span class="nx">t3</span> <span class="o">:=</span> <span class="nf">Create</span><span class="p">(</span><span class="s">&#34;t3&#34;</span><span class="p">,</span>
+        <span class="s">&#34;{{if . -}} yes {{else -}} no {{end}}\n&#34;</span><span class="p">)</span>
+    <span class="nx">t3</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&#34;not empty&#34;</span><span class="p">)</span>
+    <span class="nx">t3</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span> <span class="s">&#34;&#34;</span><span class="p">)</span>
+</pre>
+          </td>
+        </tr>
+        
+        <tr>
+          <td class="docs">
+            <p>range 块允许我们遍历切片，数组，映射或通道。在 range 块内，<code>{{.}}</code> 动作被设置为迭代的当前项。</p>
+
+          </td>
+          <td class="code">
+            
+          <pre class="chroma">
+    <span class="nx">t4</span> <span class="o">:=</span> <span class="nf">Create</span><span class="p">(</span><span class="s">&#34;t4&#34;</span><span class="p">,</span>
+        <span class="s">&#34;Range: {{range .}}{{.}} {{end}}\n&#34;</span><span class="p">)</span>
+    <span class="nx">t4</span><span class="p">.</span><span class="nf">Execute</span><span class="p">(</span><span class="nx">os</span><span class="p">.</span><span class="nx">Stdout</span><span class="p">,</span>
+        <span class="p">[]</span><span class="kt">string</span><span class="p">{</span>
+            <span class="s">&#34;Go&#34;</span><span class="p">,</span>
+            <span class="s">&#34;Rust&#34;</span><span class="p">,</span>
+            <span class="s">&#34;C++&#34;</span><span class="p">,</span>
+            <span class="s">&#34;C#&#34;</span><span class="p">,</span>
+        <span class="p">})</span>
+<span class="p">}</span>
+</pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      <table>
+        
+        <tr>
+          <td class="docs">
+            
+          </td>
+          <td class="code">
+            
+          <pre class="chroma"><span class="gp">$</span> go run templates.go 
+<span class="go">Value: some text
+</span><span class="go">Value: 5
+</span><span class="go">Value: [Go Rust C++ C#]
+</span><span class="go">Name: Jane Doe
+</span><span class="go">Name: Mickey Mouse
+</span><span class="go">yes 
+</span><span class="go">no 
+</span><span class="go">Range: Go Rust C++ C# </span></pre>
+          </td>
+        </tr>
+        
+      </table>
+      
+      
+      <p class="next">
+        下一个例子: <a href="regular-expressions">正则表达式</a>
+      </p>
+      
+
+    <p class="footer">
+        <a href="https://twitter.com/mmcgrana">@mmcgrana</a> 和<a href="https://eli.thegreenplace.net">Eli Bendersky</a>编写 | <a href="https://github.com/gobyexample-cn">gobyexample-cn</a> 翻译 | <a href="https://github.com/gobyexample-cn/gobyexample/issues">反馈</a> | <a href="https://github.com/gobyexample-cn/gobyexample">源码</a> | <a href="https://github.com/mmcgrana/gobyexample#license">license</a>      </p>
+    </p>
+
+    </div>
+    <script>
+      var codeLines = [];
+      codeLines.push('');codeLines.push('package main\u000A');codeLines.push('import (\u000A    \"os\"\u000A    \"text/template\"\u000A)\u000A');codeLines.push('func main() {\u000A');codeLines.push('    t1 :\u003D template.New(\"t1\")\u000A    t1, err :\u003D t1.Parse(\"Value is {{.}}\\n\")\u000A    if err !\u003D nil {\u000A        panic(err)\u000A    }\u000A');codeLines.push('    t1 \u003D template.Must(t1.Parse(\"Value: {{.}}\\n\"))\u000A');codeLines.push('    t1.Execute(os.Stdout, \"some text\")\u000A    t1.Execute(os.Stdout, 5)\u000A    t1.Execute(os.Stdout, []string{\u000A        \"Go\",\u000A        \"Rust\",\u000A        \"C++\",\u000A        \"C#\",\u000A    })\u000A');codeLines.push('    Create :\u003D func(name, t string) *template.Template {\u000A        return template.Must(template.New(name).Parse(t))\u000A    }\u000A');codeLines.push('    t2 :\u003D Create(\"t2\", \"Name: {{.Name}}\\n\")\u000A');codeLines.push('    t2.Execute(os.Stdout, struct {\u000A        Name string\u000A    }{\"Jane Doe\"})\u000A');codeLines.push('    t2.Execute(os.Stdout, map[string]string{\u000A        \"Name\": \"Mickey Mouse\",\u000A    })\u000A');codeLines.push('    t3 :\u003D Create(\"t3\",\u000A        \"{{if . -}} yes {{else -}} no {{end}}\\n\")\u000A    t3.Execute(os.Stdout, \"not empty\")\u000A    t3.Execute(os.Stdout, \"\")\u000A');codeLines.push('    t4 :\u003D Create(\"t4\",\u000A        \"Range: {{range .}}{{.}} {{end}}\\n\")\u000A    t4.Execute(os.Stdout,\u000A        []string{\u000A            \"Go\",\u000A            \"Rust\",\u000A            \"C++\",\u000A            \"C#\",\u000A        })\u000A}\u000A');codeLines.push('');
+    </script>
+    <script src="site.js" async></script>
+  </body>
+</html>
